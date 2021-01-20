@@ -3,8 +3,7 @@ import axios from 'axios'
 import store from '@/store'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
-import { USER_INFO } from '@/store/mutation-types'
-import { baseURL } from '@/utils/util'
+import { baseURL, USER_INFO } from '@/config/config.common.js'
 
 // 创建 axios 实例
 const service = axios.create({
