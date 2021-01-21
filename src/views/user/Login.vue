@@ -39,7 +39,8 @@
                         <a-checkbox v-model="formInline.checked">
                             24小时自动登录
                         </a-checkbox>
-                        <a style="float:right">忘记密码</a>
+                        <a style="float:right"
+                           @click="()=>{LostPasswordShow=true}">忘记密码</a>
                     </a-form-model-item>
                     <a-form-model-item>
                         <a-button type="primary"
@@ -52,20 +53,23 @@
                     </a-form-model-item>
                 </a-form-model>
             </a-tab-pane>
-            <a-tab-pane key="2"
+            <!-- <a-tab-pane key="2"
                         tab="手机扫码登录">
-                <!-- <qr-login style="width:250px" /> -->
-            </a-tab-pane>
+                <qr-login style="width:250px" />
+            </a-tab-pane> -->
         </a-tabs>
-        <a>注册用户</a>
+        <a @click="()=>{registerShow=true}">注册用户</a>
+        <Register v-model="registerShow" />
+        <LostPassword v-model="LostPasswordShow" />
     </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
 // import QrLogin from './QrLogin'
-
+import Register from './Register'
+import LostPassword from './LostPassword'
 export default {
-    // components: { QrLogin },
+    components: { Register, LostPassword },
     name: 'Login',
     data () {
         return {
@@ -87,7 +91,9 @@ export default {
                 ]
 
             },
-            loading: false
+            loading: false,
+            registerShow: false,
+            LostPasswordShow: false
         }
     },
     methods: {

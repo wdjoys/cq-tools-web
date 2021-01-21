@@ -1,23 +1,28 @@
 <template>
-    <div>
-        <a-button type="primary"
-                  @click="showModal">
-            Open Modal
-        </a-button>
-        <a-modal v-model="visible"
-                 title="Basic Modal"
-                 @ok="handleOk">
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-        </a-modal>
-    </div>
+    <a-modal v-model="show"
+             title="Basic Modal"
+             @ok="handleOk"
+             @cancel="handleOk">
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+    </a-modal>
 </template>
 <script>
 export default {
+    props: {
+        show: {
+            type: Boolean,
+            default: false
+        }
+    },
+    model: {
+        prop: 'show',
+        event: 'changShow'
+    },
     data () {
         return {
-            visible: false
+
         }
     },
     methods: {
@@ -26,7 +31,7 @@ export default {
         },
         handleOk (e) {
             console.log(e)
-            this.visible = false
+            this.$emit('changShow', false)
         }
     }
 }
