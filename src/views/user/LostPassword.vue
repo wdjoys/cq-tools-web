@@ -1,8 +1,9 @@
 <template>
     <a-modal v-model="show"
-             title="Basic Modal"
+             title="找回密码"
              @ok="handleOk"
-             @cancel="handleOk">
+             @cancel="handleOk"
+             :centered="true">
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
