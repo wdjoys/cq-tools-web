@@ -41,13 +41,15 @@
             </a-menu>
         </a-layout-sider>
         <a-layout>
-            <a-layout-header style="background: #fff; padding: 0" />
-            <a-layout-content style="margin: 0 16px">
-                <a-breadcrumb style="margin: 16px 0">
+            <a-layout-header style="background: #fff; padding: 0">
+                <serviceSelect />
+            </a-layout-header>
+            <a-layout-content style="margin:30px">
+                <!-- <a-breadcrumb style="margin: 16px 0">
                     <a-breadcrumb-item>User</a-breadcrumb-item>
                     <a-breadcrumb-item>Bill</a-breadcrumb-item>
-                </a-breadcrumb>
-                <div :style="{ padding:'15px', minHeight: '360px' }">
+                </a-breadcrumb> -->
+                <div :style="{  minHeight: '360px' }">
                     <router-view />
                 </div>
             </a-layout-content>
@@ -59,7 +61,10 @@
 </template>
 <script>
 import { menus } from '@/config/config.menu'
+
+import serviceSelect from '@/components/layouts/service-select'
 export default {
+    components: { serviceSelect },
     data () {
         return {
             collapsed: false,
