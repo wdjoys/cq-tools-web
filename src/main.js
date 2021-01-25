@@ -7,7 +7,7 @@ import {
     DatePicker, Tabs, FormModel, Input, Button, Checkbox, Icon, Layout,
     Menu, Alert, Avatar, Dropdown, Table, Tag, Divider, Modal, message, Popconfirm,
     Select, Card, Row, Col, Steps, Result, Tree, InputNumber, Descriptions, Badge, notification,
-    TreeSelect, Statistic, Transfer, Spin, Upload, List, Skeleton, Breadcrumb
+    TreeSelect, Statistic, Transfer, Spin, Upload, List, Skeleton, Breadcrumb, Carousel
 } from 'ant-design-vue'
 import vueConfig from '../vue.config'
 
@@ -49,6 +49,7 @@ Vue.use(Upload)
 Vue.use(List)
 Vue.use(Skeleton)
 Vue.use(Breadcrumb)
+Vue.use(Carousel)
 
 Vue.component(Breadcrumb.name, Breadcrumb)
 Vue.config.productionTip = false

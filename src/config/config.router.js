@@ -12,7 +12,12 @@ export const RouterMap = [
                 component: () => import(/* webpackChunkName: "workplace" */ '@/layouts/WorkplaceLayout'),
                 meta: { title: '工作区' },
                 children: [
-
+                    {
+                        path: 'home',
+                        name: 'home',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
+                        meta: { title: '主页' }
+                    }
                 ]
             },
             {

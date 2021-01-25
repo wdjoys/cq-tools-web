@@ -47,8 +47,8 @@
                     <a-breadcrumb-item>User</a-breadcrumb-item>
                     <a-breadcrumb-item>Bill</a-breadcrumb-item>
                 </a-breadcrumb>
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                    Bill is a cat.
+                <div :style="{ padding:'15px', minHeight: '360px' }">
+                    <router-view />
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
