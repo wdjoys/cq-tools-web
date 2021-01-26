@@ -10,7 +10,8 @@
             <a-col :span="12">
                 <service class="service-status" />
             </a-col>
-            <a-col :span="12">
+            <a-col :span="12"
+                   style="height:400px">
                 <monitor class="service-status" />
             </a-col>
         </a-row>

@@ -1,32 +1,43 @@
 <template>
-    <div>
-        <a-tabs default-active-key="1"
-                @change="callback">
-            <a-tab-pane key="1"
-                        tab="Tab 1">
-                Content of Tab Pane 1
-            </a-tab-pane>
-            <a-tab-pane key="2"
-                        tab="Tab 2"
-                        force-render>
-                Content of Tab Pane 2
-            </a-tab-pane>
-            <a-tab-pane key="3"
-                        tab="Tab 3">
-                Content of Tab Pane 3
-            </a-tab-pane>
-        </a-tabs>
+    <div id="container">
+
     </div>
 </template>
+
 <script>
+import { Area } from '@antv/g2plot'
 export default {
     data () {
         return {}
     },
-    methods: {
-        callback (key) {
-            console.log(key)
-        }
+    mounted () {
+        fetch('https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json')
+            .then((res) => res.json())
+            .then((data) => {
+                const area = new Area('container', {
+                    data,
+                    padding: 30,
+                    xField: 'year',
+                    yField: 'value',
+                    seriesField: 'category',
+                    color: ['#6897a7', '#8bc0d6', '#60d7a7', '#dedede', '#fedca9', '#fab36f', '#d96d6f'],
+                    xAxis: {
+                        type: 'time',
+                        mask: 'YYYY'
+                    },
+                    yAxis: {
+                        label: {
+                            // 数值格式化为千分位
+                            formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`)
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    }
+                })
+
+                area.render()
+            })
     }
 }
 </script>

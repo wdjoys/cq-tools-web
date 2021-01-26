@@ -35,24 +35,32 @@ const columns = [
         slots: { title: 'customTitle' },
         scopedSlots: { customRender: 'name' }
     },
+
     {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age'
-    },
-    {
-        title: 'Address',
+        title: '在线人数',
         dataIndex: 'address',
         key: 'address'
     },
     {
-        title: 'Tags',
+        title: '启动时间',
+        dataIndex: 'age',
+        key: 'age'
+    },
+
+    {
+        title: '状态',
         key: 'tags',
         dataIndex: 'tags',
         scopedSlots: { customRender: 'tags' }
     },
     {
-        title: 'Action',
+        title: '备份',
+        key: 'tags',
+        dataIndex: 'tags',
+        scopedSlots: { customRender: 'tags' }
+    },
+    {
+        title: '操作',
         key: 'action',
         scopedSlots: { customRender: 'action' }
     }
