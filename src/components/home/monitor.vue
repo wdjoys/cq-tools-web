@@ -16,7 +16,13 @@ export default {
             .then((data) => {
                 const area = new Area('container', {
                     data,
-                    padding: 30,
+                    padding: 50,
+
+                    legend: {
+                        layout: 'horizontal',
+                        position: 'top',
+                        offsetX: -60
+                    },
                     xField: 'year',
                     yField: 'value',
                     seriesField: 'category',
@@ -30,9 +36,6 @@ export default {
                             // 数值格式化为千分位
                             formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`)
                         }
-                    },
-                    legend: {
-                        position: 'top'
                     }
                 })
 
@@ -41,3 +44,9 @@ export default {
     }
 }
 </script>
+
+<style lang="less" scoped>
+#container {
+    padding: 30px;
+}
+</style>
