@@ -2,7 +2,7 @@ export const menus = [
     {
         label: '主页',
         icon: 'home',
-        to: ''
+        to: 'home'
 
     },
     {
@@ -10,7 +10,7 @@ export const menus = [
         icon: 'hourglass',
         to: '',
         children: [
-            { label: '属性管理', to: 'facility-prop' }
+            { label: '属性管理', to: 'task' }
 
         ]
     },
@@ -20,7 +20,7 @@ export const menus = [
         icon: 'interaction',
         to: '',
         children: [
-            { label: '属性管理', to: 'facility-prop' }
+            { label: '属性管理', to: 'group' }
 
         ]
     },
@@ -29,7 +29,7 @@ export const menus = [
         icon: 'menu',
         to: '',
         children: [
-            { label: '属性管理', to: 'facility-prop' }
+            { label: '属性管理', to: 'list' }
 
         ]
     },
@@ -38,7 +38,7 @@ export const menus = [
         icon: 'file-search',
         to: '',
         children: [
-            { label: '属性管理', to: 'facility-prop' }
+            { label: '属性管理', to: 'monitor' }
 
         ]
     },

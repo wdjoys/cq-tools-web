@@ -16,12 +16,12 @@ export default {
             .then((data) => {
                 const area = new Area('container', {
                     data,
-                    padding: 50,
+                    padding: 30,
 
                     legend: {
                         layout: 'horizontal',
                         position: 'top',
-                        offsetX: -60
+                        offsetX: 0
                     },
                     xField: 'year',
                     yField: 'value',
