@@ -13,6 +13,9 @@ jobs:
               with:
                   cmd: build # will run `yarn build` command
 
-            - name: list
-              run: |
-                  ls
+            - uses: 'marvinpinto/action-automatic-releases@latest'
+              with:
+                  repo_token: '${{ secrets.GITHUB_TOKEN }}'
+                  prerelease: false
+                  files: |
+                      dist/
