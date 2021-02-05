@@ -14,13 +14,4 @@ jobs:
                   cmd: install # will run `yarn install` command
             - uses: borales/actions-yarn@v2.0.0
               with:
-                  cmd: build  &&  tar -zvcf  dist.tar.gz dist # will run `yarn build` command
-
-            - uses: 'marvinpinto/action-automatic-releases@latest'
-              with:
-                  repo_token: '${{ secrets.GITHUB_TOKEN }}'
-                  automatic_release_tag: 'latest'
-                  prerelease: true
-                  title: 'Development Build'
-                  files: |
-                      dist.tar.gz
+                  cmd: build
