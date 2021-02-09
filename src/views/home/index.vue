@@ -4,16 +4,17 @@
             <a-col :span="24">
                 <slideshow />
             </a-col>
-            <a-col :span="24">
+            <!-- <a-col :span="24">
                 <service class="service-status" />
-            </a-col>
-            <a-col :span="12">
-                <service class="service-status" />
-            </a-col>
+            </a-col> -->
             <a-col :span="12"
-                   style="height:400px">
+                   style="height:800px">
                 <monitor class="service-status" />
             </a-col>
+            <!-- <a-col :span="12"
+                   style="height:500px">
+                <service class="service-status" />
+            </a-col> -->
         </a-row>
     </div>
 </template>
@@ -21,7 +22,11 @@
 <script>
 import { service, monitor, slideshow } from '@/components/home'
 export default {
-    components: { service, monitor, slideshow }
+    components: {
+        // service,
+        monitor,
+        slideshow
+    }
 
 }
 </script>
