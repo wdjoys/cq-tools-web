@@ -8,6 +8,8 @@
 <script>
 import * as echarts from 'echarts/core'
 import {
+    TitleComponent,
+    TooltipComponent,
     GridComponent
 } from 'echarts/components'
 import {
@@ -18,8 +20,9 @@ import {
 } from 'echarts/renderers'
 
 echarts.use(
-    [GridComponent, LineChart, CanvasRenderer]
+    [TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]
 )
+
 export default {
     data () {
         return {
@@ -39,12 +42,12 @@ export default {
     methods: {
         getinfo () {
             console.log(this.series[0].data.length)
-            if (this.series[0].data.length > 8) {
+            if (this.series[0].data.length > 20) {
                 this.series.map(item => {
                     item.data.shift()
                 })
             }
-            const t = new Date()
+            const t = Date.parse(new Date())
 
             this.series.map(item => { item.data.push([t, Math.round(Math.random() * 1000)]) })
             return this.series
@@ -55,47 +58,79 @@ export default {
         var myChart = echarts.init(chartDom)
         var option
 
-        option = {
+        function randomData () {
+            now = new Date(+now + oneDay)
+            value = value + Math.random() * 21 - 10
+            return {
+                name: now.toString(),
+                value: [
+                    [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                    Math.round(value)
+                ]
+            }
+        }
 
+        var data = []
+        var now = +new Date(1997, 9, 3)
+        var oneDay = 24 * 3600 * 1000
+        var value = Math.random() * 1000
+        for (var i = 0; i < 1000; i++) {
+            data.push(randomData())
+        }
+
+        option = {
+            title: {
+                text: '动态数据 + 时间坐标轴'
+            },
+            // tooltip: {
+            //     trigger: 'axis',
+            //     formatter: function (params) {
+            //         params = params[0]
+            //         var date = new Date(params.name)
+            //         return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1]
+            //     },
+            //     axisPointer: {
+            //         animation: false
+            //     }
+            // },
             xAxis: {
                 type: 'time',
-                boundaryGap: false,
                 splitLine: {
                     show: false
                 }
             },
             yAxis: {
                 type: 'value',
+                boundaryGap: [0, '100%'],
                 splitLine: {
                     show: false
                 }
             },
             series: [{
-                data: [],
+                name: '模拟数据',
                 type: 'line',
-                areaStyle: {}
-            },
-            {
-                data: [],
-                type: 'line',
-                areaStyle: {},
                 showSymbol: false,
-                hoverAnimation: false
+                hoverAnimation: false,
+                data: data,
+                areaStyle: {}
+
             }]
-            // animation: false,
-            // animationDurationUpdate: 500,
-            // animationEasingUpdateL: 'quadraticOut'
         }
 
-        option && myChart.setOption(option)
-        const that = this
         setInterval(() => {
-            const series = that.getinfo()
+            for (var i = 0; i < 5; i++) {
+                data.shift()
+                data.push(randomData())
+            }
+
             myChart.setOption({
-                series
+                series: [{
+                    data: data
+                }]
             })
-            console.log(series)
         }, 1000)
+
+        option && myChart.setOption(option)
     }
 }
 </script>
