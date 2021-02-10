@@ -1,11 +1,25 @@
 <template>
-    <div id="container">
+    <div id="main"
+         style="height:400px">
 
     </div>
 </template>
 
 <script>
-import { DualAxes } from '@antv/g2plot'
+import * as echarts from 'echarts/core'
+import {
+    GridComponent
+} from 'echarts/components'
+import {
+    LineChart
+} from 'echarts/charts'
+import {
+    CanvasRenderer
+} from 'echarts/renderers'
+
+echarts.use(
+    [GridComponent, LineChart, CanvasRenderer]
+)
 export default {
     data () {
         return {
@@ -14,80 +28,74 @@ export default {
                 netIn: 555
 
             },
-            data: []
+
+            series: [
+                { data: [] },
+                { data: [] }
+            ]
 
         }
     },
     methods: {
         getinfo () {
-            const time = new Date()
-            if (this.data.length > 35) { this.data.splice(0, 2) }
-            this.data.push(
-                {
-                    time,
-                    in: Math.round(Math.random() * 100),
-                    out: Math.round(Math.random() * 100)
-                }
-            )
+            console.log(this.series[0].data.length)
+            if (this.series[0].data.length > 8) {
+                this.series.map(item => {
+                    item.data.shift()
+                })
+            }
+            const t = new Date()
+
+            this.series.map(item => { item.data.push([t, Math.round(Math.random() * 1000)]) })
+            return this.series
         }
     },
     mounted () {
-        const area = new DualAxes('container', {
-            padding: 30,
-            animation: false,
-            legend: {
-                layout: 'horizontal',
-                position: 'top',
-                offsetX: 0
-            },
-            xField: 'time',
-            yField: ['in', 'out'],
-            seriesField: 'category',
-            color: ['#f7b851', '#52a9ff'],
+        var chartDom = document.getElementById('main')
+        var myChart = echarts.init(chartDom)
+        var option
+
+        option = {
+
             xAxis: {
                 type: 'time',
-                mask: 'HH:MM:ss',
-                tickCount: 60
-
+                boundaryGap: false,
+                splitLine: {
+                    show: false
+                }
             },
-            smooth: true,
-            isStack: false,
-            // point: {},
             yAxis: {
-                label: {
-                    // 数值格式化为千分位
-                    formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`)
-                },
-                min: 100,
-                line: {
-                    style: {
-
-                        lineWidth: 0.5
-
-                    }
+                type: 'value',
+                splitLine: {
+                    show: false
                 }
-
             },
-            geometryOptions: [
-                {
-                    geometry: 'line',
-                    color: '#5B8FF9'
-                },
-                {
-                    geometry: 'line',
-                    color: '#5AD8A6'
-                }
-            ]
+            series: [{
+                data: [],
+                type: 'line',
+                areaStyle: {}
+            },
+            {
+                data: [],
+                type: 'line',
+                areaStyle: {},
+                showSymbol: false,
+                hoverAnimation: false
+            }]
+            // animation: false,
+            // animationDurationUpdate: 500,
+            // animationEasingUpdateL: 'quadraticOut'
+        }
 
-        })
-
-        console.log(area.options.data = this.data)
-        // area.data = this.data
-        area.render()
+        option && myChart.setOption(option)
+        const that = this
         setInterval(() => {
-            this.getinfo()
-            area.changeData([this.data, this.data])
-        }, 3000)
+            const series = that.getinfo()
+            myChart.setOption({
+                series
+            })
+            console.log(series)
+        }, 1000)
     }
 }
 </script>
