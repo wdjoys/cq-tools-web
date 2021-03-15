@@ -152,16 +152,15 @@
     "@antv/util" "~2.0.5"
     tslib "^2.0.0"
 
-"@antv/g2plot@^2.3.9":
-  version "2.3.9"
-  resolved "https://registry.npm.taobao.org/@antv/g2plot/download/@antv/g2plot-2.3.9.tgz?cache=0&sync_timestamp=1611159420984&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40antv%2Fg2plot%2Fdownload%2F%40antv%2Fg2plot-2.3.9.tgz#f220bee7c50f19af321f79485003f4fbd0847b14"
-  integrity sha1-8iC+58UPGa8yH3lIUAP0+9CEexQ=
+"@antv/g2plot@^2.3.15":
+  version "2.3.15"
+  resolved "https://registry.npm.taobao.org/@antv/g2plot/download/@antv/g2plot-2.3.15.tgz#ed0fcbb4b7c00cd0f1dec1459d7835abc8a9bd5e"
+  integrity sha1-7Q/LtLfADNDx3sFFnXg1q8ipvV4=
   dependencies:
     "@antv/event-emitter" "^0.1.2"
     "@antv/g2" "^4.1.0"
     d3-hierarchy "^2.0.0"
     d3-regression "^1.3.5"
-    d3-sankey "^0.12.3"
     size-sensor "^1.0.1"
     tslib "^2.0.3"
 
@@ -3291,13 +3290,6 @@ cyclist@^1.0.1:
   resolved "https://registry.npm.taobao.org/cyclist/download/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
-"d3-array@1 - 2":
-  version "2.11.0"
-  resolved "https://registry.npm.taobao.org/d3-array/download/d3-array-2.11.0.tgz?cache=0&sync_timestamp=1611532834605&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fd3-array%2Fdownload%2Fd3-array-2.11.0.tgz#5ed6a2869bc7d471aec8df9ff6ed9fef798facc4"
-  integrity sha1-XtaihpvH1HGuyN+f9u2f73mPrMQ=
-  dependencies:
-    internmap "^1.0.0"
-
 d3-color@1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/d3-color/download/d3-color-1.4.1.tgz#c52002bf8846ada4424d55d97982fef26eb3bc8a"
@@ -3320,30 +3312,10 @@ d3-interpolate@^1.3.2:
   dependencies:
     d3-color "1"
 
-d3-path@1:
-  version "1.0.9"
-  resolved "https://registry.npm.taobao.org/d3-path/download/d3-path-1.0.9.tgz?cache=0&sync_timestamp=1597836775299&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fd3-path%2Fdownload%2Fd3-path-1.0.9.tgz#48c050bb1fe8c262493a8caf5524e3e9591701cf"
-  integrity sha1-SMBQux/owmJJOoyvVSTj6VkXAc8=
-
 d3-regression@^1.3.5:
   version "1.3.5"
   resolved "https://registry.npm.taobao.org/d3-regression/download/d3-regression-1.3.5.tgz#ad4318aa426987fce3fedbee4106cee5443ce31f"
   integrity sha1-rUMYqkJph/zj/tvuQQbO5UQ84x8=
-
-d3-sankey@^0.12.3:
-  version "0.12.3"
-  resolved "https://registry.npm.taobao.org/d3-sankey/download/d3-sankey-0.12.3.tgz#b3c268627bd72e5d80336e8de6acbfec9d15d01d"
-  integrity sha1-s8JoYnvXLl2AM26N5qy/7J0V0B0=
-  dependencies:
-    d3-array "1 - 2"
-    d3-shape "^1.2.0"
-
-d3-shape@^1.2.0:
-  version "1.3.7"
-  resolved "https://registry.npm.taobao.org/d3-shape/download/d3-shape-1.3.7.tgz#df63801be07bc986bc54f63789b4fe502992b5d7"
-  integrity sha1-32OAG+B7yYa8VPY3ibT+UCmStdc=
-  dependencies:
-    d3-path "1"
 
 d3-timer@^1.0.9:
   version "1.0.10"
@@ -3682,14 +3654,6 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
-
-echarts@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.npm.taobao.org/echarts/download/echarts-5.0.2.tgz?cache=0&sync_timestamp=1612592464414&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fecharts%2Fdownload%2Fecharts-5.0.2.tgz#1726d17a57cf05d62cd0567b4325e1201a56baf6"
-  integrity sha1-FybRelfPBdYs0FZ7QyXhIBpWuvY=
-  dependencies:
-    tslib "2.0.3"
-    zrender "5.0.4"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -5160,11 +5124,6 @@ internal-ip@^4.3.0:
   dependencies:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
-
-internmap@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/internmap/download/internmap-1.0.0.tgz#3c6bf0944b0eae457698000412108752bbfddb56"
-  integrity sha1-PGvwlEsOrkV2mAAEEhCHUrv921Y=
 
 interpret@^1.2.0:
   version "1.4.0"
@@ -8673,11 +8632,6 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.3.tgz?cache=0&sync_timestamp=1609887581211&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
-  integrity sha1-jgdBrEX8DCJuWKF7/D5kubxsphw=
-
 tslib@^1.10.0, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.14.1.tgz?cache=0&sync_timestamp=1602286730817&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
@@ -9387,10 +9341,3 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
-
-zrender@5.0.4:
-  version "5.0.4"
-  resolved "https://registry.npm.taobao.org/zrender/download/zrender-5.0.4.tgz?cache=0&sync_timestamp=1612184604936&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fzrender%2Fdownload%2Fzrender-5.0.4.tgz#89c355af908b9f64a301b38f751b7951f2c8a95a"
-  integrity sha1-icNVr5CLn2SjAbOPdRt5UfLIqVo=
-  dependencies:
-    tslib "2.0.3"
