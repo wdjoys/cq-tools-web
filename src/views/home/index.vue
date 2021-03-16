@@ -7,25 +7,24 @@
             <!-- <a-col :span="24">
                 <service class="service-status" />
             </a-col> -->
-            <a-col :span="12"
-                   style="height:800px">
+            <a-col :span="12">
                 <monitor class="service-status" />
             </a-col>
-            <!-- <a-col :span="12"
-                   style="height:500px">
-                <service class="service-status" />
-            </a-col> -->
+            <a-col :span="12">
+                <chartjs class="service-status" />
+            </a-col>
         </a-row>
     </div>
 </template>
 
 <script>
-import { service, monitor, slideshow } from '@/components/home'
+import { service, monitor, slideshow, chartjs } from '@/components/home'
 export default {
     components: {
         // service,
         monitor,
-        slideshow
+        slideshow,
+        chartjs
     }
 
 }
