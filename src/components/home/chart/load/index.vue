@@ -30,12 +30,12 @@ export default {
                     label: '处理器负载',
                     icon: 'caret-up',
                     value: 0,
-                    color: '#5dd9a8'
+                    color: 'rgba(255, 70, 131)'
                 }, {
                     label: '内存负载',
                     icon: 'caret-down',
                     value: 0,
-                    color: '#5b8ff9'
+                    color: 'rgba(255, 140, 0)'
                 }, {
                     label: '磁盘负载',
                     icon: 'caret-down',
@@ -47,14 +47,14 @@ export default {
             datasets: [{
                 label: '处理器负载',
                 data: this.load.cpu,
-                borderColor: 'rgba(93, 217, 168,1)',
-                backgroundColor: 'rgba(93, 217, 168,0.3)'
+                borderColor: 'rgba(255, 70, 131,1)',
+                backgroundColor: 'rgba(255, 70, 131,0.3)'
             },
             {
                 label: '内存负载',
                 data: this.load.ram,
-                borderColor: 'rgba(91, 143, 249,1)',
-                backgroundColor: 'rgba(91, 143, 249,0.5)'
+                borderColor: 'rgba(255, 140, 0,1)',
+                backgroundColor: 'rgba(255, 140, 0,0.3)'
             },
             {
                 label: '磁盘负载',
