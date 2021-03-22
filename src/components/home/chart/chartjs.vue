@@ -20,6 +20,7 @@ export default {
         chartUpdata () {
             this.myChart.update()
         }
+
     },
     //             chart.data.datasets.forEach(dataset => {
     //             dataset.data.shift()
