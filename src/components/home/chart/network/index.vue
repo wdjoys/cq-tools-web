@@ -12,6 +12,7 @@
             </div>
         </div>
         <chartjs :yAxesTicks="yAxesTicks"
+                 :datasets="datasets"
                  ref="chart" />
     </div>
 </template>
@@ -51,13 +52,13 @@ export default {
 
             datasets: [{
                 label: '出网流量',
-                data: this.network.network_out,
+                data: this.network.out,
                 borderColor: 'rgba(93, 217, 168,1)',
                 backgroundColor: 'rgba(93, 217, 168,0.3)'
             },
             {
                 label: '入网流量',
-                data: this.network.network_in,
+                data: this.network.in,
                 borderColor: 'rgba(91, 143, 249,1)',
                 backgroundColor: 'rgba(91, 143, 249,0.5)'
             }]
@@ -76,23 +77,38 @@ export default {
             }
         },
         yAxesTicks (value, index, values) {
-            if (value < 1000) {
-                return value + ' K'
-            } else {
-                return value / 1000 + ' M'
+            const arr = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+
+            for (let i = 0; i < 10; i++) {
+                if (value > 1000) {
+                    value = (value / 1000).toFixed(1)
+                } else {
+                    return `${value} ${arr[i]}`
+                }
             }
         },
         update (data) {
             const arr = []
-            arr[0] = this.tips[2].value === 0 ? 0 : data.network_out - this.tips[2].value
-            arr[1] = this.tips[3].value === 0 ? 0 : data.network_in - this.tips[3].value
+            arr[0] = this.tips[2].value === 0 ? 0 : (data.network_out - this.tips[2].value) / 10
+            arr[1] = this.tips[3].value === 0 ? 0 : (data.network_in - this.tips[3].value) / 10
             arr[2] = data.network_out
             arr[3] = data.network_in
 
             for (let i = 0; i < 4; i++) {
                 this.$set(this.tips[i], 'value', arr[i])
             }
-            console.log('dfsdfs', data)
+            // console.log('dfsdfs', data)
+
+            // 队列元素 删除开头 新加一个到结尾
+            function quee (l, el) {
+                l.shift(el)
+                l.push(el)
+            }
+
+            quee(this.network.in, { x: data.time_stamp * 1000, y: arr[1] })
+            quee(this.network.out, { x: data.time_stamp * 1000, y: arr[0] })
+
+            this.$refs.chart.chartUpdata()
             // for (const item in this.serverInfo) {
             //     //         for (const key in this.serverInfo[item]) {
             //     //             // this.serverInfo[item][key].shift()
@@ -105,7 +121,15 @@ export default {
     },
     mounted () {
 
+    },
+    watch: {
+        network (v) {
+            // console.log(v, '数据变化')
+            this.$set(this.datasets[0], 'data', this.network.in)
+            this.$set(this.datasets[1], 'data', this.network.out)
+        }
     }
+
 }
 </script>
 

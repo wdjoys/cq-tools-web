@@ -27,7 +27,7 @@ Object.assign(
 Object.assign(
     Chart.defaults.global.elements.line,
     {
-        borderWidth: 3, // 线宽
+        borderWidth: 2, // 线宽
         pointRadius: 5, // 点大小
         tension: 0 // 曲率
     })

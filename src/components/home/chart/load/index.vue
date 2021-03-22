@@ -8,11 +8,12 @@
                     <a-icon :type="tip.icon"
                             :style="{marginRight:'5px',color:tip.color}" /><span>{{tip.label}}</span>
                 </div>
-                <span>{{netValueFormatter(tip.value)}}</span>
+                <span>{{tip.value}} %</span>
             </div>
         </div>
         <chartjs :yAxesTicks="yAxesTicks"
-                 :datasets="datasets" />
+                 :datasets="datasets"
+                 ref="chart" />
     </div>
 </template>
 
@@ -28,17 +29,17 @@ export default {
                 {
                     label: '处理器负载',
                     icon: 'caret-up',
-                    value: 555,
+                    value: 0,
                     color: '#5dd9a8'
                 }, {
                     label: '内存负载',
                     icon: 'caret-down',
-                    value: 5555,
+                    value: 0,
                     color: '#5b8ff9'
                 }, {
                     label: '磁盘负载',
                     icon: 'caret-down',
-                    value: 555555,
+                    value: 0,
                     color: '#5b8ff9'
                 }
             ],
@@ -64,26 +65,50 @@ export default {
         }
     },
     methods: {
-        netValueFormatter (value) {
-            if (value > 1024) {
-                value = (value / 1024).toFixed(2)
-            } else {
-                return `${value} KB`
-            }
-            // MB处理
-            if (value > 1024) {
-                value = (value / 1024).toFixed(2)
-            } else {
-                return `${value} MB`
-            }
-            // GB处理
-            return `${value} GB`
-        },
+
         yAxesTicks (value, index, values) {
             return value + ' %'
+        },
+        update (data) {
+            const arr = []
+            arr[0] = data.cpu
+            arr[1] = data.ram
+            arr[2] = data.disk
+
+            for (let i = 0; i < 3; i++) {
+                this.$set(this.tips[i], 'value', arr[i])
+            }
+            // console.log('dfsdfs', data)
+
+            // 队列元素 删除开头 新加一个到结尾
+            function quee (l, el) {
+                l.shift(el)
+                l.push(el)
+            }
+
+            quee(this.load.cpu, { x: data.time_stamp * 1000, y: arr[0] })
+            quee(this.load.ram, { x: data.time_stamp * 1000, y: arr[1] })
+            quee(this.load.disk, { x: data.time_stamp * 1000, y: arr[2] })
+
+            this.$refs.chart.chartUpdata()
+            // for (const item in this.serverInfo) {
+            //     //         for (const key in this.serverInfo[item]) {
+            //     //             // this.serverInfo[item][key].shift()
+            //     //             this.serverInfo[item][key].push({ x: data.time_stamp, y: data[key] })
+            //     //         }
+            //     //     }
+
+            // }
+        }
+    },
+    watch: {
+        load (v) {
+            // console.log(v, '数据变化')
+            this.$set(this.datasets[0], 'data', this.load.cpu)
+            this.$set(this.datasets[1], 'data', this.load.ram)
+            this.$set(this.datasets[2], 'data', this.load.disk)
         }
     }
-
 }
 </script>
 
