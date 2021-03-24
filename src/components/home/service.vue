@@ -6,27 +6,39 @@
         <a slot="name"
            slot-scope="text">{{ text }}</a>
 
-        <span slot="tags"
-              slot-scope="tags">
-            <a-tag v-for="tag in tags"
-                   :key="tag"
-                   :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'">
-                {{ tag.toUpperCase() }}
+        <span slot="state"
+              slot-scope="state,record">
+            <a-tag :color="formateState(record)[1]">
+                {{formateState(record)[0]}}
             </a-tag>
         </span>
+        <span slot="player"
+              slot-scope="player">
+            <a>{{player}}
+                <a-icon type="line-chart"
+                        style="margin-left:5px" />
+            </a>
+        </span>
+
         <span slot="action"
               slot-scope="text, record">
-            <a>Invite 一 {{ record.name }}</a>
+            <a>开区</a>
             <a-divider type="vertical" />
-            <a>Delete</a>
+            <a>关区</a>
             <a-divider type="vertical" />
-            <a class="ant-dropdown-link"> More actions
-                <a-icon type="down" />
-            </a>
+            <a>合区</a>
+            <a-divider type="vertical" />
+            <a>M2日志</a>
+            <a-divider type="vertical" />
+            <a>网关日志</a>
+            <a-divider type="vertical" />
+            <a @click="delete_(record)">删除</a>
+
         </span>
     </a-table>
 </template>
 <script>
+import { GameService } from '@/api/restful/restful'
 const columns = [
     {
         dataIndex: 'name',
@@ -36,20 +48,21 @@ const columns = [
 
     {
         title: '启动时间',
-        dataIndex: 'address',
-        key: 'address'
+        dataIndex: 'start_time',
+        key: 'start_time'
     },
     {
         title: '在线人数',
-        dataIndex: 'age',
-        key: 'age'
+        dataIndex: 'player',
+        key: 'player',
+        scopedSlots: { customRender: 'player' }
     },
 
     {
         title: '状态',
-        key: 'tags',
-        dataIndex: 'tags',
-        scopedSlots: { customRender: 'tags' }
+        key: 'state',
+        dataIndex: 'state',
+        scopedSlots: { customRender: 'state' }
     },
     {
         title: '备份',
@@ -64,36 +77,36 @@ const columns = [
     }
 ]
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer']
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser']
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher']
-    }
-]
-
 export default {
     data () {
         return {
-            data,
+            data: [],
             columns
         }
+    },
+    methods: {
+        formateState (record) {
+            const nowTimeStamp = new Date().getTime() / 1000
+            if (record.state) {
+                if (record.start_time < nowTimeStamp) {
+                    return ['正式开区', 'green']
+                } else {
+                    return ['测试开区', 'cyan']
+                }
+            } else {
+                if (record.test_time > nowTimeStamp) {
+                    return ['等待测试', '#2db7f5']
+                } else {
+                    return ['关闭', '#f50']
+                }
+            }
+        }
+    },
+    mounted () {
+        GameService.get().then(res => {
+            console.log(res)
+            this.data = res
+        })
     }
 }
 </script>

@@ -11,4 +11,38 @@ class SrverInfo {
     }
 }
 
-export { SrverInfo }
+class GameService {
+    static get () {
+        return axiosGameServer({
+            url: URL.gameService,
+            method: 'get'
+            // data: parameter
+        })
+    }
+
+    static post (parameter) {
+        return axiosGameServer({
+            url: URL.gameService,
+            method: 'post',
+            data: parameter
+        })
+    }
+
+    static put (parameter) {
+        return axiosGameServer({
+            url: URL.gameService,
+            method: 'put',
+            data: parameter
+        })
+    }
+
+    static delete (parameter) {
+        return axiosGameServer({
+            url: URL.gameService,
+            method: 'delete',
+            data: parameter
+        })
+    }
+}
+
+export { SrverInfo, GameService }
