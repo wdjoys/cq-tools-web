@@ -16,6 +16,10 @@ class ServerLoad {
     sendMessage (messageText) {
         this.ws.send(messageText)
     }
+
+    close () {
+        this.ws.close()
+    }
 }
 
 export { ServerLoad }

@@ -3,11 +3,13 @@ import axios from 'axios'
 import store from '@/store'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
-import { baseURL, USER_INFO } from '@/config/config.common.js'
+import { authURL, USER_INFO } from '@/config/config.common.js'
 
-// 创建 axios 实例
+store.state.serverInfo.ip = '127.0.0.1'
+const gameURL = '//' + store.state.serverInfo.ip + ':7890/'
+
 const service = axios.create({
-    baseURL,
+
     timeout: 4000 // 请求超时时间
 })
 
@@ -70,4 +72,22 @@ const installer = {
     }
 }
 
-export { installer as VueAxios, service as axios }
+const axiosGameServer = (config) => {
+    config.url = gameURL + config.url
+    console.log('axios', config)
+    return service(config)
+    // return new Promise((resolve, reject) => {
+    //     service(config).then(res => {
+    //         resolve(res)
+    //     }).catch(err => {
+    //         reject(err)
+    //     })
+    // })
+}
+
+const axiosAuthServer = (config) => {
+    config.url = authURL + config.url
+    return service(config)
+}
+
+export { installer as VueAxios, axiosGameServer, axiosAuthServer }

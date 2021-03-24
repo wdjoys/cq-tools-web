@@ -26,22 +26,11 @@ export const menus = [
     },
     {
         label: '分区管理',
-        icon: 'interaction',
-        to: '',
-        children: [
-            { label: '属性管理', to: 'group' }
-
-        ]
-    },
-    {
-        label: '列表模板',
         icon: 'menu',
-        to: '',
-        children: [
-            { label: '属性管理', to: 'list' }
+        to: 'sub-server'
 
-        ]
     },
+
     {
         label: '负载监控',
         icon: 'file-search',

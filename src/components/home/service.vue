@@ -1,12 +1,11 @@
 <template>
     <a-table :columns="columns"
              :data-source="data"
-             :pagination="false">
+             :pagination="false"
+             class="main">
         <a slot="name"
            slot-scope="text">{{ text }}</a>
-        <span slot="customTitle">
-            <a-icon type="smile-o" /> Name
-        </span>
+
         <span slot="tags"
               slot-scope="tags">
             <a-tag v-for="tag in tags"
@@ -32,17 +31,16 @@ const columns = [
     {
         dataIndex: 'name',
         key: 'name',
-        slots: { title: 'customTitle' },
-        scopedSlots: { customRender: 'name' }
+        title: '分区名称'
     },
 
     {
-        title: '在线人数',
+        title: '启动时间',
         dataIndex: 'address',
         key: 'address'
     },
     {
-        title: '启动时间',
+        title: '在线人数',
         dataIndex: 'age',
         key: 'age'
     },
@@ -99,3 +97,9 @@ export default {
     }
 }
 </script>
+
+<style lang="less" scoped>
+.main {
+    background-color: #fff;
+}
+</style>

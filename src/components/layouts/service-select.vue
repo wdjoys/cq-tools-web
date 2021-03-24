@@ -20,7 +20,7 @@
                     </a-menu>
                 </a-dropdown>
             </a-col>
-            <a-col :span="10">
+            <a-col :span="18">
                 <a-space :size="20">
                     <span>
                         腾讯云 4h8g
@@ -28,28 +28,26 @@
                     <span>
                         <a-icon type="windows"
                                 style="margin-right:5px" />系统：
-                        windows server 2019
+                        {{serverInfo.system_version}}
                     </span>
+
                     <span>
-                        已不间断运行：15天
+                        开机时间：{{$moment(parseInt(serverInfo.boot_time)*1000).fromNow()}}
                     </span>
-                </a-space>
-            </a-col>
-            <a-col :span="8">
-                <a-space class="load"
-                         :size="16">
-                    <span>
-                        CPU:10%
-                    </span>
-                    <span>
-                        内存：55%
-                    </span>
-                    <span>
-                        上传：100kb/s
-                    </span>
-                    <span>
-                        下载：100kb/s
-                    </span>
+                    <a-popover>
+                        <template slot="content">
+                            <p>物理内存：{{bytesFormatter(serverInfo.ram)}}，交换内存：{{bytesFormatter(serverInfo.swap) }}</p>
+                            <p>处理器：{{ serverInfo.cpu_name}} × {{serverInfo.cpu_count}}路，{{ serverInfo.cpu_core}} 核心，{{ serverInfo.cpu_threads}} 线程</p>
+
+                            <div v-for="disk in disks"
+                                 :key="disk.path">
+                                {{disk.path}}，总容量：{{bytesFormatter(disk.size.total)}}，已使用：{{bytesFormatter(disk.size.used)}}
+                                <a-progress :percent="disk.size.percent" />
+                            </div>
+
+                        </template>
+                        <span>更多</span>
+                    </a-popover>
                 </a-space>
             </a-col>
 
@@ -93,7 +91,27 @@
 </template>
 
 <script>
+import { SrverInfo } from '@/api/restful/restful'
+import { bytesFormatter } from '@/utils/utils'
 export default {
+    data () {
+        return {
+            serverInfo: {},
+            disks: []
+        }
+    },
+    methods: {
+        bytesFormatter
+    },
+    mounted () {
+        SrverInfo.get().then(res => {
+            this.serverInfo = res
+            this.disks = JSON.parse(this.serverInfo.disk.replace(/'/g, '"').replace(/False/g, 'false'))
+        })
+    },
+    computed: {
+
+    }
 
 }
 </script>
@@ -102,6 +120,7 @@ export default {
 .header {
     padding: 0 30px;
     // background-color: hotpink;
+    font-size: 12.5px;
 
     .info {
         float: right;

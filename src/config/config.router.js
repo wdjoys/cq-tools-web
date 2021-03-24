@@ -31,10 +31,10 @@ export const RouterMap = [
                         meta: { title: '分组' }
                     },
                     {
-                        path: 'list',
-                        name: 'list',
-                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
-                        meta: { title: '列表管理' }
+                        path: 'sub-server',
+                        name: 'sub-server',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/server/index'),
+                        meta: { title: '分区管理' }
                     },
                     {
                         path: 'monitor',
@@ -43,8 +43,8 @@ export const RouterMap = [
                         meta: { title: '负载监控' }
                     },
                     {
-                        path: 'userx',
-                        name: 'userx',
+                        path: 'user',
+                        name: 'user',
                         component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
                         meta: { title: '用户管理xx' }
                     }

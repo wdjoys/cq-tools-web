@@ -4,9 +4,9 @@
             <a-col :span="24">
                 <slideshow />
             </a-col>
-            <!-- <a-col :span="24">
-                <service class="service-status" />
-            </a-col> -->
+            <a-col :span="24">
+                <service />
+            </a-col>
             <a-col :span="12"
                    class="service-status">
 
@@ -28,7 +28,7 @@ import { service, network, slideshow, load } from '@/components/home'
 import { ServerLoad } from '@/api/socket/socket'
 export default {
     components: {
-        // service,
+        service,
         load,
         slideshow,
         network
@@ -118,9 +118,12 @@ export default {
 
     },
     mounted () {
-        const s = new ServerLoad('ws', this.ws_receive)
+        this.ws = new ServerLoad('ws', this.ws_receive)
         // s.receviMessage = this.xxx
         // console.log('xx')
+    },
+    destroyed () {
+        this.ws.close()
     }
 }
 </script>

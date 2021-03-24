@@ -1,10 +1,20 @@
 <template>
-    <div></div>
+    <div class="main">
+        <service />
+    </div>
 </template>
 
 <script>
-export default {
 
+import { service } from '@/components/home'
+export default {
+    components: { service },
+    data () {
+        return {}
+    },
+    mounted () {
+
+    }
 }
 </script>
 
