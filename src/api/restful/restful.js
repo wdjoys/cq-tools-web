@@ -45,4 +45,37 @@ class GameService {
     }
 }
 
-export { SrverInfo, GameService }
+class Group {
+    static get () {
+        return axiosGameServer({
+            url: URL.group,
+            method: 'get'
+            // data: parameter
+        })
+    }
+
+    static post (parameter) {
+        return axiosGameServer({
+            url: URL.group,
+            method: 'post',
+            data: parameter
+        })
+    }
+
+    static put (parameter) {
+        return axiosGameServer({
+            url: URL.group,
+            method: 'put',
+            data: parameter
+        })
+    }
+
+    static delete (parameter) {
+        return axiosGameServer({
+            url: URL.group,
+            method: 'delete',
+            data: parameter
+        })
+    }
+}
+export { SrverInfo, GameService, Group }

@@ -120,7 +120,7 @@ export default {
 .header {
     padding: 0 30px;
     // background-color: hotpink;
-    font-size: 12.5px;
+    // font-size: 12.5px;
 
     .info {
         float: right;

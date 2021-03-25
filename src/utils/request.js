@@ -5,9 +5,6 @@ import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
 import { authURL, USER_INFO } from '@/config/config.common.js'
 
-store.state.serverInfo.ip = '127.0.0.1'
-const gameURL = '//' + store.state.serverInfo.ip + ':7890/'
-
 const service = axios.create({
 
     timeout: 4000 // 请求超时时间
@@ -73,16 +70,10 @@ const installer = {
 }
 
 const axiosGameServer = (config) => {
+    const gameURL = '//' + store.state.serverInfo.ip + ':7890/'
     config.url = gameURL + config.url
     console.log('axios', config)
     return service(config)
-    // return new Promise((resolve, reject) => {
-    //     service(config).then(res => {
-    //         resolve(res)
-    //     }).catch(err => {
-    //         reject(err)
-    //     })
-    // })
 }
 
 const axiosAuthServer = (config) => {

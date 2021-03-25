@@ -1,16 +1,28 @@
 <template>
     <div class="main">
+        <a-button type="primary"
+                  style="margin:10px 0px"
+                  @click="create">创建</a-button>
         <service />
+        <createService ref="createService" />
     </div>
 </template>
 
 <script>
 
-import { service } from '@/components/home'
+import { service, createService } from '@/components/service/'
 export default {
-    components: { service },
+    components: { service, createService },
     data () {
-        return {}
+        return {
+
+        }
+    },
+
+    methods: {
+        create () {
+            this.$refs.createService.visible = true
+        }
     },
     mounted () {
 

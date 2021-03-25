@@ -6,7 +6,7 @@ import store from './store'
 import {
     DatePicker, Tabs, FormModel, Input, Button, Checkbox, Icon, Layout,
     Menu, Alert, Avatar, Dropdown, Table, Tag, Divider, Modal, message, Popconfirm,
-    Select, Card, Row, Col, Steps, Result, Tree, InputNumber, Descriptions, Badge, notification,
+    Select, Card, Row, Col, Steps, Result, Tree, InputNumber, Descriptions, Badge, notification, Switch,
     TreeSelect, Statistic, Transfer, Spin, Upload, List, Skeleton, Breadcrumb, Carousel, Space, Popover, Progress
 } from 'ant-design-vue'
 import vueConfig from '../vue.config'
@@ -76,6 +76,7 @@ Vue.use(Carousel)
 Vue.use(Space)
 Vue.use(Popover)
 Vue.use(Progress)
+Vue.use(Switch)
 
 Vue.component(Breadcrumb.name, Breadcrumb)
 Vue.config.productionTip = false

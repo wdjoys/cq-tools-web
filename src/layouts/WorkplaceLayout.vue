@@ -44,7 +44,7 @@
             <a-layout-header style="background: #fff; padding: 0">
                 <serviceSelect />
             </a-layout-header>
-            <a-layout-content style="margin:30px">
+            <a-layout-content style="margin:20px 30px;">
                 <!-- <a-breadcrumb style="margin: 16px 0">
                     <a-breadcrumb-item>User</a-breadcrumb-item>
                     <a-breadcrumb-item>Bill</a-breadcrumb-item>
@@ -62,7 +62,7 @@
 <script>
 import { menus } from '@/config/config.menu'
 
-import serviceSelect from '@/components/layouts/service-select'
+import serviceSelect from './service-select'
 export default {
     components: { serviceSelect },
     data () {

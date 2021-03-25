@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { service, network, slideshow, load } from '@/components/home'
+import { network, slideshow, load } from '@/components/home'
+import { service } from '@/components/service/'
 import { ServerLoad } from '@/api/socket/socket'
 export default {
     components: {
