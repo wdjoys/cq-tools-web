@@ -27,8 +27,8 @@ export const RouterMap = [
                     {
                         path: 'group',
                         name: 'group',
-                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
-                        meta: { title: '分组' }
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/group/index'),
+                        meta: { title: '分组管理' }
                     },
                     {
                         path: 'sub-server',
@@ -46,7 +46,7 @@ export const RouterMap = [
                         path: 'user',
                         name: 'user',
                         component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
-                        meta: { title: '用户管理xx' }
+                        meta: { title: '用户管理' }
                     }
                 ]
             },

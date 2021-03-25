@@ -8,21 +8,15 @@ export const menus = [
     {
         label: '任务管理',
         icon: 'hourglass',
-        to: '',
-        children: [
-            { label: '属性管理', to: 'task' }
+        to: 'task'
 
-        ]
     },
 
     {
         label: '分组管理',
         icon: 'interaction',
-        to: '',
-        children: [
-            { label: '属性管理', to: 'group' }
+        to: 'group'
 
-        ]
     },
     {
         label: '分区管理',

@@ -38,8 +38,11 @@
                 <a-divider type="vertical" />
                 <a>网关日志</a>
                 <a-divider type="vertical" />
-                <a @click="delete_(record)">删除</a>
 
+                <a-popconfirm title="Are you sure delete this service?"
+                              @confirm="delete_(record)">
+                    <a>删除</a>
+                </a-popconfirm>
             </span>
         </a-table>
     </div>
@@ -93,7 +96,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getGameService']),
+        ...mapActions(['getGameService', 'deleteGameService']),
         formateState (record) {
             const nowTimeStamp = new Date().getTime() / 1000
             if (record.state) {
@@ -109,12 +112,23 @@ export default {
                     return ['关闭', '#f50']
                 }
             }
+        },
+        getTableData () {
+            this.getGameService().then(res => {
+                this.data = res
+            })
+        },
+        delete_ (record) {
+            this.deleteGameService(record)
+                .then(res => {
+                    this.getTableData()
+                })
+                .catch()
         }
+
     },
     mounted () {
-        this.getGameService().then(res => {
-            this.data = res
-        })
+        this.getTableData()
     }
 }
 </script>

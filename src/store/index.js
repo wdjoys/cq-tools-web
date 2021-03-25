@@ -13,15 +13,15 @@ export default new Vuex.Store({
         serverInfo: {
             ip: '127.0.0.1'
         },
-        group: [],
+
         gameService: []
     },
     mutations: {
         SET_GAME_SERVICE (state, res) {
             state.gameService = res
         },
-        DELETE_GAME_SERVICE (state, index) {
-            state.gameService.splice(index, 1)
+        DELETE_GAME_SERVICE (state, gameService) {
+            state.gameService = state.gameService.filter(item => item.id !== gameService.id)
         },
         ADD_GAME_SERVICE (state, gameService) {
             state.gameService.push(gameService)
@@ -52,6 +52,19 @@ export default new Vuex.Store({
                 GameService.post(gameService, gameService.createTask)
                     .then(res => {
                         commit('ADD_GAME_SERVICE', res)
+                        resolve(res)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+            })
+        },
+        deleteGameService ({ commit, state }, gameService) {
+            return new Promise((resolve, reject) => {
+                GameService.delete(gameService)
+                    .then(res => {
+                        commit('DELETE_GAME_SERVICE', gameService)
+                        console.log(state.gameService, 'xxxxxx')
                         resolve(res)
                     })
                     .catch(err => {

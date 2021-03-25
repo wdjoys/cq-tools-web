@@ -9,23 +9,24 @@
             <a-form-model :model="form"
                           :label-col="{span:6}"
                           :wrapper-col="{span:14}"
-                          :rules="formRules">
+                          :rules="formRules"
+                          ref="form">
                 <a-form-model-item label="分区名称"
                                    prop="name">
                     <a-input v-model="form.name" />
-                </a-form-model-item>
-                <a-form-model-item label="测试时间"
-                                   prop="test_time">
-                    <a-date-picker show-time
-                                   placeholder="选择日期时间"
-                                   @ok="(moment)=> TimeChange(moment,form,'test_time')"
-                                   style="width:100%" />
                 </a-form-model-item>
                 <a-form-model-item label="开区时间"
                                    prop="start_time">
                     <a-date-picker show-time
                                    placeholder="选择日期时间"
-                                   @ok="(moment)=> TimeChange(moment,form,'start_time')"
+                                   @change="(moment)=> TimeChange(moment,form,'start_time')"
+                                   style="width:100%" />
+                </a-form-model-item>
+                <a-form-model-item label="测试时间"
+                                   prop="test_time">
+                    <a-date-picker show-time
+                                   placeholder="选择日期时间"
+                                   @change="(moment)=> TimeChange(moment,form,'test_time')"
                                    style="width:100%" />
                 </a-form-model-item>
                 <a-form-model-item label="所属分组"
@@ -72,7 +73,18 @@ export default {
 
                 ],
                 test_time: [
-                    { required: true, message: '请选择测试时间', trigger: 'change' }
+                    { required: true, message: '请选择测试时间', trigger: 'change' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (this.form.start_time - value < 600) {
+                                callback(new Error('测试时间至少比开区时间提前十分钟'))
+                            } else {
+                                callback()
+                            }
+                        },
+                        message: '测试时间至少比开区时间提前十分钟',
+                        trigger: 'change'
+                    }
 
                 ],
                 start_time: [
@@ -92,16 +104,20 @@ export default {
 
         }),
 
-        handleOk (e) {
-            this.confirmLoading = true
-            this.postGameService(this.form).then(res => {
-                this.confirmLoading = false
-                this.visible = false
-                console.log(res)
-                // eslint-disable-next-line no-unused-expressions
-                console.log(this.$store.state.gameService, 'xxx')
-            }).catch(() => {
-                this.confirmLoading = false
+        handleOk () {
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    this.confirmLoading = true
+                    this.postGameService(this.form).then(res => {
+                        this.confirmLoading = false
+                        this.visible = false
+                        console.log(res)
+                        // eslint-disable-next-line no-unused-expressions
+                        console.log(this.$store.state.gameService, 'xxx')
+                    }).catch(() => {
+                        this.confirmLoading = false
+                    })
+                }
             })
         },
         handleCancel (e) {
@@ -113,7 +129,7 @@ export default {
         },
         TimeChange (time, form, key) {
             form[key] = time.unix()
-            console.log(this.form)
+            console.log(this.form, form[key])
         }
 
     },
