@@ -17,8 +17,14 @@ export default ({
         ADD_GROUP (state, group) {
             state.group.push(group)
         },
-        PUT_GROUP (state, index, group) {
-            state.group.splice(index, 1, group)
+        PUT_GROUP (state, group) {
+            state.group = state.group.map(item => {
+                if (item.id === group.id) {
+                    return group
+                } else {
+                    return item
+                }
+            })
         }
 
     },
@@ -45,6 +51,18 @@ export default ({
                     .then(res => {
                         commit('ADD_GROUP', res)
                         resolve(res)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+            })
+        },
+        putGroup ({ commit, state }, group) {
+            return new Promise((resolve, reject) => {
+                Group.put(group)
+                    .then(res => {
+                        commit('PUT_GROUP', group)
+                        resolve(group)
                     })
                     .catch(err => {
                         reject(err)

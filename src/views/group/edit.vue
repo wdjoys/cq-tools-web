@@ -1,62 +1,170 @@
 <template>
-    <a-form-model :model="formInline"
-                  @submit="handleSubmit"
-                  :labelCol="{span:4}"
-                  :wrapperCol="{span:14}">
-        <a-form-model-item label="分组名称">
-            <a-input v-model="formInline.user">
+    <div class="main">
+        <router-link :to="{name:'group'}"
+                     style="position:relative;left:100px;top:150px;">
+            <a-icon type="close"
+                    style="font:italic bold 20px/20px " />
+        </router-link>
 
-            </a-input>
-        </a-form-model-item>
-        <a-form-model-item label="版本路径">
-            <a-input v-model="formInline.user">
-            </a-input>
-        </a-form-model-item>
-        <a-form-model-item label="列表模板">
-            <a-textarea v-model="formInline.user"
-                        :auto-size="{ minRows: 10, maxRows:20 }"
-                        class="pre" />
-        </a-form-model-item>
+        <a-form-model ref="ruleForm"
+                      :model="form"
+                      :labelCol="{span:4}"
+                      :wrapperCol="{span:14}"
+                      :rules="formRules">
+            <a-form-model-item label="分组名称"
+                               prop="name">
+                <a-input v-model="form.name">
 
-        <a-form-model-item label="可用变量">
-            电信ip：<a @click="insert_var('s')">{ip}</a>，
-            联通ip：<a>{ip}</a>，
-            移动ip：<a>{ip}</a>，
-            登录端口：<a>{port}</a>，
-            微端ip：<a>{micro_server_ip}</a>，
-            微端端口：<a>{micro_server_port}</a>，
-            年：<a>{year}</a>，
-            月：<a>{month}</a>，
-            日：<a>{day}</a>，
-            时：<a>{hour}</a>，
-            分：<a>{minute}</a>，
-            秒：<a>{second}</a>，
-        </a-form-model-item>
-        <a-form-model-item label="分区模板">
-            <a-textarea v-model="formInline.user"
-                        :auto-size="{ minRows: 10, maxRows:20}"
-                        class="pre"
-                        ref="textarea" />
-        </a-form-model-item>
+                </a-input>
+            </a-form-model-item>
+            <a-form-model-item label="版本路径"
+                               prop="root_server_path">
+                <a-input v-model="form.root_server_path">
+                </a-input>
+            </a-form-model-item>
+            <a-form-model-item label="可用变量">
+                <template v-for="(v,k) in vars">
 
-    </a-form-model>
+                    {{k}}: <a :key="k"
+                       @click="insert_var(`{${v}}`,'textarea')">{{v}}</a>
+                </template>
+            </a-form-model-item>
+            <a-form-model-item label="列表模板"
+                               prop="template">
+                <a-textarea v-model="form.template"
+                            :auto-size="{ minRows: 10, maxRows:20 }"
+                            class="pre"
+                            ref="textarea" />
+            </a-form-model-item>
+
+            <a-form-model-item label="可用变量">
+                <template v-for="(v,k) in sub_vars">
+
+                    {{k}}: <a :key="k"
+                       @click="insert_var(`{${v}}`,'sub_textarea')">{{v}}</a>
+                </template>
+            </a-form-model-item>
+            <a-form-model-item label="分区模板"
+                               prop="template_sub">
+                <a-textarea v-model="form.template_sub"
+                            :auto-size="{ minRows: 10, maxRows:20}"
+                            class="pre"
+                            ref="sub_textarea" />
+            </a-form-model-item>
+            <a-form-model-item>
+
+                <a-button type="primary"
+                          @click="submit"
+                          style="width:100%;margin-left:28.5%"
+                          :loading="submit_loadind">提交</a-button>
+            </a-form-model-item>
+            <a-form-model-item>
+                <router-link :to="{name:'group'}">
+                    <a-button type="primary"
+                              style="width:100%;margin-left:28.5%">返回</a-button>
+                </router-link>
+
+            </a-form-model-item>
+
+        </a-form-model>
+    </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
     data () {
         return {
-            formInline: {
-                user: '',
-                password: ''
+            submit_loadind: false,
+            vars: {
+                年: 'year',
+                月: 'month',
+                日: 'day',
+                时: 'hour',
+                分: 'minute',
+                秒: 'second',
+                分区列表开始: 'start',
+                分区列表结束: 'end'
+            },
+            sub_vars: {
+                电信ip: 'ct_ip',
+                联通ip: 'cu_ip',
+                移动ip: 'cm_ip',
+                登录端口: 'port',
+                微端ip: 'micro_server_ip',
+                微端端口: 'micro_server_port',
+                年: 'year',
+                月: 'month',
+                日: 'day',
+                时: 'hour',
+                分: 'minute',
+                秒: 'second'
+            },
+            form: {
+                name: '',
+                root_server_path: '',
+                template: '',
+                template_sub: ''
+            },
+            formRules: {
+                name: [
+                    { required: true, message: '分组名称必填', trigger: 'blur' }
+
+                ],
+                root_server_path: [
+                    { required: true, message: '版本路径必填', trigger: 'blur' }
+
+                ],
+                template: [
+                    { required: true, message: '列表模板必填', trigger: 'blur' }
+
+                ],
+                template_sub: [
+                    { required: true, message: '分区模板必填', trigger: 'blur' }
+
+                ]
             }
         }
     },
     methods: {
-        handleSubmit (e) {
-            console.log(this.formInline)
+        ...mapActions(['putGroup', 'postGroup']),
+
+        submit (e) {
+            this.$refs.ruleForm.validate(valid => {
+                if (valid) {
+                    let method
+                    this.submit_loadind = true
+                    // eslint-disable-next-line no-prototype-builtins
+                    if (this.form.hasOwnProperty('id')) {
+                        this.putGroup(this.form)
+                            .then(res => {
+                                console.log(res)
+                                this.submit_loadind = false
+                            })
+                            .catch(err => {
+                                this.submit_loadind = false
+                                console.log(err)
+                            })
+                    } else {
+                        this.postGroup(this.form)
+                            .then(res => {
+                                this.form = res
+                                this.submit_loadind = false
+                            })
+                            .catch(err => {
+                                this.submit_loadind = false
+                                console.log(err)
+                            })
+                    }
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
         },
-        insert_var (str) {
-            const obj = this.$refs.textarea
+        insert_var (str, ref) {
+            // 选择dom
+            const obj = this.$refs[ref].$el
+            // console.log(typeof obj.selectionStart, obj)
             if (document.selection) {
                 var sel = document.selection.createRange()
                 sel.text = str
@@ -72,14 +180,24 @@ export default {
                 obj.value += str
             }
         }
+
+    },
+    mounted () {
+        this.form = this.$route.params
+
+        console.log(this.msg)
     }
 }
 </script>
 
 <style lang="less" scoped>
-.pre {
-    width: 100%;
-    white-space: nowrap;
-    overflow: scroll;
+.main {
+    background-color: #fff;
+    padding: 40px;
+    .pre {
+        width: 100%;
+        white-space: nowrap;
+        overflow: scroll;
+    }
 }
 </style>

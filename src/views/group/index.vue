@@ -4,23 +4,31 @@
             <a-col :md="24"
                    :xl="12"
                    :xxl="8"
-                   style="padding:10px">
-                <a-button type=""
-                          style="width:100%;height:217px">
-                    <a-icon type="plus" />创建分区
-                </a-button>
+                   class="card">
+                <router-link :to="{ name:'group-edit'}">
+                    <a-button type=""
+                              style="width:100%;height:217px">
+                        <a-icon type="plus" />创建分区
+                    </a-button>
+                </router-link>
+
             </a-col>
             <a-col v-for="group in groups"
                    :key="group.id"
                    :md="24"
                    :xl="12"
                    :xxl="8"
-                   style="padding:10px">
+                   class="card">
 
-                <a-card :title="group.name"
-                        class="card">
-                    <a slot="extra"
-                       href="#">编辑</a>
+                <a-card :title="group.name">
+                    <router-link slot="extra"
+                                 :to="{
+                                     name:'group-edit',
+                                     params: group
+                        }">
+                        编辑
+                    </router-link>
+
                     <p><span>分组列表地址：</span>
                         <input :ref="`${group.id}-url`"
                                v-model="group.root_server_path"
@@ -79,9 +87,10 @@ export default {
 </script>
 <style lang='less' scoped>
 .card {
-    display: inline-block;
+    padding: 0px 20px 20px 00px;
 
-    width: 100%;
+    // &:nth-child(2) {
+    // }
 
     .text {
         width: calc(100% - 130px);
