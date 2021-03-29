@@ -1,14 +1,13 @@
 <template>
     <div class="main">
-        <router-link :to="{name:'group'}"
-                     style="position:relative;left:100px;top:150px;">
+        <router-link :to="{name:'group'}">
             <a-icon type="close"
-                    style="font:italic bold 20px/20px " />
+                    style="font:italic bold 20px/20px ;margin-left:99%" />
         </router-link>
 
         <a-form-model ref="ruleForm"
                       :model="form"
-                      :labelCol="{span:4}"
+                      :labelCol="{span:5}"
                       :wrapperCol="{span:14}"
                       :rules="formRules">
             <a-form-model-item label="分组名称"
@@ -26,7 +25,7 @@
                 <template v-for="(v,k) in vars">
 
                     {{k}}: <a :key="k"
-                       @click="insert_var(`{${v}}`,'textarea')">{{v}}</a>
+                       @click="insert_var(`{${v}}`,'template')">{{v}}</a>
                 </template>
             </a-form-model-item>
             <a-form-model-item label="列表模板"
@@ -34,14 +33,14 @@
                 <a-textarea v-model="form.template"
                             :auto-size="{ minRows: 10, maxRows:20 }"
                             class="pre"
-                            ref="textarea" />
+                            ref="template" />
             </a-form-model-item>
 
             <a-form-model-item label="可用变量">
                 <template v-for="(v,k) in sub_vars">
 
                     {{k}}: <a :key="k"
-                       @click="insert_var(`{${v}}`,'sub_textarea')">{{v}}</a>
+                       @click="insert_var(`{${v}}`,'template_sub')">{{v}}</a>
                 </template>
             </a-form-model-item>
             <a-form-model-item label="分区模板"
@@ -49,19 +48,19 @@
                 <a-textarea v-model="form.template_sub"
                             :auto-size="{ minRows: 10, maxRows:20}"
                             class="pre"
-                            ref="sub_textarea" />
+                            ref="template_sub" />
             </a-form-model-item>
             <a-form-model-item>
 
                 <a-button type="primary"
                           @click="submit"
-                          style="width:100%;margin-left:28.5%"
+                          style="width:100%;margin-left:35.5%"
                           :loading="submit_loadind">提交</a-button>
             </a-form-model-item>
             <a-form-model-item>
                 <router-link :to="{name:'group'}">
                     <a-button type="primary"
-                              style="width:100%;margin-left:28.5%">返回</a-button>
+                              style="width:100%;margin-left:35.5%">返回</a-button>
                 </router-link>
 
             </a-form-model-item>
@@ -139,9 +138,11 @@ export default {
                             .then(res => {
                                 console.log(res)
                                 this.submit_loadind = false
+                                this.$message.success('修改成功！')
                             })
                             .catch(err => {
                                 this.submit_loadind = false
+                                this.$message.success('修改失败！')
                                 console.log(err)
                             })
                     } else {
@@ -149,9 +150,11 @@ export default {
                             .then(res => {
                                 this.form = res
                                 this.submit_loadind = false
+                                this.$message.success('创建成功！')
                             })
                             .catch(err => {
                                 this.submit_loadind = false
+                                this.$message.success('创建失败！')
                                 console.log(err)
                             })
                     }
@@ -165,19 +168,17 @@ export default {
             // 选择dom
             const obj = this.$refs[ref].$el
             // console.log(typeof obj.selectionStart, obj)
-            if (document.selection) {
-                var sel = document.selection.createRange()
-                sel.text = str
-            } else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
+            if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
                 var startPos = obj.selectionStart
                 var endPos = obj.selectionEnd
                 var cursorPos = startPos
                 var tmpStr = obj.value
-                obj.value = tmpStr.substring(0, startPos) + str + tmpStr.substring(endPos, tmpStr.length)
+                // obj.value =
+                const valueText = tmpStr.substring(0, startPos) + str + tmpStr.substring(endPos, tmpStr.length)
+                // console.log(valueText, ref)
+                this.$set(this.form, ref, valueText)
                 cursorPos += str.length
                 obj.selectionStart = obj.selectionEnd = cursorPos
-            } else {
-                obj.value += str
             }
         }
 
