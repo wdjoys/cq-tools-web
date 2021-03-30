@@ -21,13 +21,22 @@
                    class="card">
 
                 <a-card :title="group.name">
-                    <router-link slot="extra"
-                                 :to="{
+                    <template slot="extra">
+
+                        <a-popconfirm title="Are you sure delete this group?"
+                                      placement="bottom"
+                                      ok-text="Yes"
+                                      cancel-text="No"
+                                      @confirm="delete_group(group)">
+                            <a style="margin-right:10px">删除</a>
+                        </a-popconfirm>
+                        <router-link :to="{
                                      name:'group-edit',
                                      params: group
                         }">
-                        编辑
-                    </router-link>
+                            编辑
+                        </router-link>
+                    </template>
 
                     <p><span>分组列表地址：</span>
                         <input :ref="`${group.id}-url`"
@@ -48,7 +57,7 @@
                                 @click="copy(`${group.id}-path`)" />
                     </p>
 
-                    <p>列表更新时间：</p>
+                    <p>列表更新时间：{{$moment(group.update_time*1000).format("YYYY MMMM Do , hh:mm:ss")}}</p>
                 </a-card>
             </a-col>
 
@@ -65,7 +74,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getGroup']),
+        ...mapActions(['getGroup', 'deleteGroup']),
         getGroupData () {
             this.getGroup()
                 .then(res => {
@@ -73,6 +82,15 @@ export default {
                 })
                 .catch()
         },
+        delete_group (group) {
+            this.deleteGroup(group)
+                .then(res => {
+                    console.log(res)
+                    this.getGroupData()
+                })
+                .catch()
+        },
+
         copy (ref) {
             // console.log(this.$refs[ref])
             this.$refs[ref][0].select()

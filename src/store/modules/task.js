@@ -1,7 +1,5 @@
 import { Group } from '@/api/restful/restful'
 
-const groupRequest = new Group()
-
 export default ({
     state: {
         group: []
@@ -31,7 +29,7 @@ export default ({
         getGroup ({ commit, state }) {
             return new Promise((resolve, reject) => {
                 if (state.group.length === 0) {
-                    groupRequest.get()
+                    Group.get()
                         .then(res => {
                             commit('SET_GROUP', res)
                             resolve(res)
@@ -46,7 +44,7 @@ export default ({
         },
         postGroup ({ commit, state }, group) {
             return new Promise((resolve, reject) => {
-                groupRequest.post(group, group.createTask)
+                Group.post(group, group.createTask)
                     .then(res => {
                         commit('ADD_GROUP', res)
                         resolve(res)
@@ -58,7 +56,7 @@ export default ({
         },
         putGroup ({ commit, state }, group) {
             return new Promise((resolve, reject) => {
-                groupRequest.put(group)
+                Group.put(group)
                     .then(res => {
                         commit('PUT_GROUP', group)
                         resolve(group)
@@ -70,7 +68,7 @@ export default ({
         },
         deleteGroup ({ commit, state }, group) {
             return new Promise((resolve, reject) => {
-                groupRequest.delete(group)
+                Group.delete(group)
                     .then(res => {
                         commit('DELETE_GROUP', group)
                         resolve(group)

@@ -1,7 +1,9 @@
 const URL = {
     serverInfo: 'server-base-info/',
     gameService: 'game_service/',
-    group: 'group/'
+    group: 'group/',
+    task: 'task/'
+
 }
 
 export default URL

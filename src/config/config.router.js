@@ -21,7 +21,7 @@ export const RouterMap = [
                     {
                         path: 'task',
                         name: 'task',
-                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/task/Task'),
                         meta: { title: '任务管理' }
                     },
                     {
