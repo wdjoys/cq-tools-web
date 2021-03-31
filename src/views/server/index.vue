@@ -2,7 +2,7 @@
     <div class="main">
         <a-button type="primary"
                   style="margin:10px 0px"
-                  @click="create">创建</a-button>
+                  @click="create">创建分区</a-button>
         <service />
         <createService ref="createService" />
     </div>

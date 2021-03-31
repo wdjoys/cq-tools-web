@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 // 导入子模块
 import group from './modules/group'
 import task from './modules/task'
+import taskCode from './modules/task_code'
 import service from './modules/service'
 
 Vue.use(Vuex)
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     modules: {
         group,
         task,
-        service
+        service,
+        taskCode
     }
 })

@@ -64,4 +64,11 @@ class Task extends BaseRequest {
         this.url = URL.task
     }
 }
-export { SrverInfo, GameService, Group, Task }
+
+class TaskCode extends BaseRequest {
+    constructor () {
+        super()
+        this.url = URL.taskCode
+    }
+}
+export { SrverInfo, GameService, Group, Task, TaskCode }

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 // import { VueAxios } from './utils/request'
 import {
-    DatePicker, Tabs, FormModel, Input, Button, Checkbox, Icon, Layout,
+    DatePicker, Tabs, FormModel, Input, Button, Checkbox, Icon, Layout, Radio,
     Menu, Alert, Avatar, Dropdown, Table, Tag, Divider, Modal, message, Popconfirm,
     Select, Card, Row, Col, Steps, Result, Tree, InputNumber, Descriptions, Badge, notification, Switch,
     TreeSelect, Statistic, Transfer, Spin, Upload, List, Skeleton, Breadcrumb, Carousel, Space, Popover, Progress
@@ -77,6 +77,7 @@ Vue.use(Space)
 Vue.use(Popover)
 Vue.use(Progress)
 Vue.use(Switch)
+Vue.use(Radio)
 
 Vue.component(Breadcrumb.name, Breadcrumb)
 Vue.config.productionTip = false

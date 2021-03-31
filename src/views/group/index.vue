@@ -8,7 +8,7 @@
                 <router-link :to="{ name:'group-edit'}">
                     <a-button type=""
                               style="width:100%;height:217px">
-                        <a-icon type="plus" />创建分区
+                        <a-icon type="plus" />创建分组
                     </a-button>
                 </router-link>
 
