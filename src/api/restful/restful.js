@@ -45,73 +45,12 @@ class SrverInfo {
     }
 }
 
-class GameService {
-    static get () {
-        return axiosGameServer({
-            url: URL.gameService,
-            method: 'get'
-            // data: parameter
-        })
-    }
-
-    static post (parameter) {
-        return axiosGameServer({
-            url: URL.gameService,
-            method: 'post',
-            data: parameter
-        })
-    }
-
-    static put (parameter) {
-        return axiosGameServer({
-            url: URL.gameService,
-            method: 'put',
-            data: parameter
-        })
-    }
-
-    static delete (parameter) {
-        return axiosGameServer({
-            url: URL.gameService,
-            method: 'delete',
-            data: parameter
-        })
+class GameService extends BaseRequest {
+    constructor () {
+        super()
+        this.url = URL.gameService
     }
 }
-
-// class Group {
-//     static get () {
-//         return axiosGameServer({
-//             url: URL.group,
-//             method: 'get'
-//             // data: parameter
-//         })
-//     }
-
-//     static post (parameter) {
-//         return axiosGameServer({
-//             url: URL.group,
-//             method: 'post',
-//             data: parameter
-//         })
-//     }
-
-//     static put (parameter) {
-//         return axiosGameServer({
-//             url: URL.group,
-//             method: 'put',
-//             data: parameter
-//         })
-//     }
-
-//     static delete (parameter) {
-//         return axiosGameServer({
-//             url: URL.group,
-//             method: 'delete',
-//             data: parameter
-//         })
-//     }
-// }
 class Group extends BaseRequest {
     constructor () {
         super()
@@ -125,4 +64,4 @@ class Task extends BaseRequest {
         this.url = URL.task
     }
 }
-export { SrverInfo, GameService, Group }
+export { SrverInfo, GameService, Group, Task }

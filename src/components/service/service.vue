@@ -49,6 +49,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+
 const columns = [
     {
         dataIndex: 'name',
@@ -96,7 +97,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getGameService', 'deleteGameService']),
+        ...mapActions('service', ['get', 'delete']),
         formateState (record) {
             const nowTimeStamp = new Date().getTime() / 1000
             if (record.state) {
@@ -114,12 +115,12 @@ export default {
             }
         },
         getTableData () {
-            this.getGameService().then(res => {
+            this.get().then(res => {
                 this.data = res
             })
         },
         delete_ (record) {
-            this.deleteGameService(record)
+            this.delete(record)
                 .then(res => {
                     this.getTableData()
                 })

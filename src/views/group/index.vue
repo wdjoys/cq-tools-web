@@ -66,7 +66,8 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('group')
 export default {
     data () {
         return {
@@ -74,19 +75,19 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getGroup', 'deleteGroup']),
-        getGroupData () {
-            this.getGroup()
+        ...mapActions(['get', 'delete']),
+        getGroup () {
+            this.get()
                 .then(res => {
                     this.groups = res
                 })
                 .catch()
         },
         delete_group (group) {
-            this.deleteGroup(group)
+            this.delete(group)
                 .then(res => {
                     console.log(res)
-                    this.getGroupData()
+                    this.getGroup()
                 })
                 .catch()
         },
@@ -99,7 +100,7 @@ export default {
         }
     },
     mounted () {
-        this.getGroupData()
+        this.getGroup()
     }
 }
 </script>

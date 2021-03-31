@@ -29,6 +29,11 @@
     </div>
 </template>
 <script>
+
+import { createNamespacedHelpers } from 'vuex'
+
+import task from '@/store/modules/task'
+const { mapState, mapActions } = createNamespacedHelpers('task')
 const columns = [
     {
         dataIndex: 'name',
@@ -63,6 +68,19 @@ export default {
             data: [],
             columns
         }
+    },
+    methods: {
+        ...mapActions(['get', 'post'])
+    },
+    mounted () {
+        const xx = { xxx: 1 }
+        console.log(xx)
+        console.log(task)
+        this.get()
+            .then(res => {
+                console.log(res)
+            })
+            .catch()
     }
 }
 </script>

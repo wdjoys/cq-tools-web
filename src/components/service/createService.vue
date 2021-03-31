@@ -97,13 +97,13 @@ export default {
         }
     },
     methods: {
-        ...mapActions({
-
-            getGroup: 'getGroup',
-            postGameService: 'postGameService' // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
-
+        ...mapActions('group', {
+            getGroup: 'get'
         }),
 
+        ...mapActions('service', {
+            postGameService: 'post'
+        }),
         handleOk () {
             this.$refs.form.validate(valid => {
                 if (valid) {

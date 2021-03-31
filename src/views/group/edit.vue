@@ -69,7 +69,8 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('group')
 export default {
     data () {
         return {
@@ -125,7 +126,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['putGroup', 'postGroup']),
+        ...mapActions(['put', 'post']),
 
         submit (e) {
             this.$refs.ruleForm.validate(valid => {
@@ -134,7 +135,7 @@ export default {
                     this.submit_loadind = true
                     // eslint-disable-next-line no-prototype-builtins
                     if (this.form.hasOwnProperty('id')) {
-                        this.putGroup(this.form)
+                        this.put(this.form)
                             .then(res => {
                                 console.log(res)
                                 this.submit_loadind = false
@@ -146,7 +147,7 @@ export default {
                                 console.log(err)
                             })
                     } else {
-                        this.postGroup(this.form)
+                        this.post(this.form)
                             .then(res => {
                                 this.form = res
                                 this.submit_loadind = false
