@@ -72,8 +72,11 @@
                  centered>
             <a-form-model :model="taskForm"
                           :label-col="{span:6}"
-                          :wrapper-col="{span:14}">
-                <a-form-model-item label="任务名称">
+                          :wrapper-col="{span:14}"
+                          ref="taskForm"
+                          :rules="taskFormRule">
+                <a-form-model-item label="任务名称"
+                                   prop="task_code">
                     <a-select style="width: 100%"
                               v-model='taskForm.task_code'>
                         <a-select-option v-for="t in taskCode"
@@ -83,7 +86,8 @@
                         </a-select-option>
                     </a-select>
                 </a-form-model-item>
-                <a-form-model-item label="关联分区">
+                <a-form-model-item label="关联分区"
+                                   prop="service">
                     <a-select mode="multiple"
                               placeholder="Please select"
                               style="width: 100%"
@@ -95,7 +99,8 @@
                         </a-select-option>
                     </a-select>
                 </a-form-model-item>
-                <a-form-model-item label="任务模式">
+                <a-form-model-item label="任务模式"
+                                   prop="model">
                     <a-radio-group name="radioGroup"
                                    v-model="taskForm.model">
                         <a-radio :value="0">
@@ -108,7 +113,8 @@
                     </a-radio-group>
                 </a-form-model-item>
                 <a-form-model-item label="执行时间"
-                                   v-if="taskForm.model===1">
+                                   v-if="taskForm.model===1"
+                                   prop="time">
                     <a-input v-model="taskForm.time"
                              suffix="分钟" />
                 </a-form-model-item>
@@ -174,8 +180,16 @@ export default {
             taskForm: {
                 model: 0,
                 task_code: null,
-                service: []
+                service: [],
+                time: null
+            },
+            taskFormRule: {
+                task_code: [
+                    { required: true, message: '请选择任务', trigger: 'blur' }],
+                time: [
+                    { required: true, message: '请选择时间', trigger: 'blur' }]
             }
+
         }
     },
     methods: {
