@@ -104,6 +104,9 @@ export default {
         ...mapActions('service', {
             postGameService: 'post'
         }),
+        ...mapActions('task', {
+            postTask: 'post'
+        }),
         handleOk () {
             this.$refs.form.validate(valid => {
                 if (valid) {
@@ -111,11 +114,31 @@ export default {
                     this.postGameService(this.form).then(res => {
                         this.confirmLoading = false
                         this.visible = false
-                        console.log(res)
-                        // eslint-disable-next-line no-unused-expressions
-                        console.log(this.$store.state.gameService, 'xxx')
+                        // console.log(res)
+                        this.$message.success('分区创建成功！')
+
+                        // 创建开区任务
+                        if (this.form.createTask) {
+                            console.log('创建开区任务')
+                            const task = { game_service: `[${res.id},]`, model: 0 }
+                            task.time = res.test_time
+                            task.task_code = 1
+                            this.postTask(task) // 测试任务
+                                .then(res => {
+                                    this.$message.success('测试任务创建成功！')
+                                })
+                                .catch()
+                            task.time = res.start_time
+                            task.task_code = 2
+                            this.postTask(task) // 正式开区任务
+                                .then(res => {
+                                    this.$message.success('开区任务创建成功！')
+                                })
+                                .catch()
+                        }
                     }).catch(() => {
                         this.confirmLoading = false
+                        this.$message.error('分区创建失败！')
                     })
                 }
             })

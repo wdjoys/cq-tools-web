@@ -28,19 +28,13 @@ export const menus = [
     {
         label: '负载监控',
         icon: 'file-search',
-        to: '',
-        children: [
-            { label: '属性管理', to: 'monitor' }
+        to: 'monitor'
 
-        ]
     },
     {
         label: '用户管理',
         icon: 'user',
-        to: '',
-        children: [
-            { label: '属性管理', to: 'facility-prop' }
+        to: 'monitor'
 
-        ]
     }
 ]

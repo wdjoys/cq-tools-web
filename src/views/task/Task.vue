@@ -21,7 +21,8 @@
             <span slot="time"
                   slot-scope="text, record">
                 <span v-if="record.model===0">
-                    {{$moment(text*1000).format()}}
+                    {{$moment(text*1000).format("YYYY-MM-DD , HH:mm:ss")}}
+
                 </span>
                 <span v-if="record.model===1">
                     每{{text}}秒
@@ -54,13 +55,15 @@
             </span>
             <span slot="action"
                   slot-scope="text, record">
-                <a>Invite 一 {{ record.name }}</a>
+
                 <a-divider type="vertical" />
-                <a>Delete</a>
-                <a-divider type="vertical" />
-                <a class="ant-dropdown-link"> More actions
-                    <a-icon type="down" />
-                </a>
+                <a-popconfirm title="Are you sure delete this task?"
+                              ok-text="Yes"
+                              cancel-text="No"
+                              @confirm="taskDelete(record)">
+                    <a>删除任务</a>
+                </a-popconfirm>
+
             </span>
         </a-table>
         <a-modal title="创建任务"
@@ -78,7 +81,8 @@
                 <a-form-model-item label="任务名称"
                                    prop="task_code">
                     <a-select style="width: 100%"
-                              v-model='taskForm.task_code'>
+                              v-model='taskForm.task_code'
+                              @change="taskCodeChange">
                         <a-select-option v-for="t in taskCode"
                                          :value="t.id"
                                          :key="t.id">
@@ -87,11 +91,12 @@
                     </a-select>
                 </a-form-model-item>
                 <a-form-model-item label="关联分区"
-                                   prop="service">
+                                   prop="game_service"
+                                   v-show="linkServiceShow">
                     <a-select mode="multiple"
                               placeholder="Please select"
                               style="width: 100%"
-                              v-model='taskForm.service'>
+                              v-model='taskForm.game_service'>
                         <a-select-option v-for="s in service"
                                          :value="s.id"
                                          :key="s.id">
@@ -137,24 +142,20 @@ import { mapActions } from 'vuex'
 const columns = [
     {
         dataIndex: 'task_code',
-        // key: 'name',
         title: '任务名称',
         scopedSlots: { customRender: 'task_code' }
     },
     {
         title: '关联分区',
         dataIndex: 'game_service',
-        // key: 'address'
         scopedSlots: { customRender: 'game_service' }
     }, {
         title: '执行时间',
         dataIndex: 'time',
-        // key: 'age',
         scopedSlots: { customRender: 'time' }
     },
     {
         title: '模式',
-        // key: 'tags',
         dataIndex: 'model',
         scopedSlots: { customRender: 'model' }
 
@@ -167,7 +168,6 @@ const columns = [
 ]
 
 export default {
-
     data () {
         return {
 
@@ -180,20 +180,34 @@ export default {
             taskForm: {
                 model: 0,
                 task_code: null,
-                service: [],
+                game_service: [],
                 time: null
             },
+            linkServiceShow: true,
             taskFormRule: {
                 task_code: [
                     { required: true, message: '请选择任务', trigger: 'blur' }],
                 time: [
-                    { required: true, message: '请选择时间', trigger: 'blur' }]
+                    { required: true, message: '请选择时间', trigger: 'change' }],
+                game_service: [
+                    {
+                        validator: (rule, value, callback) => {
+                            console.log(value, this.linkServiceShow)
+                            if (this.linkServiceShow === true && value.length === 0) {
+                                callback(new Error('请选择要关联的分区'))
+                            } else {
+                                callback()
+                            }
+                        },
+                        trigger: 'change',
+                        message: '请选择要关联的分区'
+                    }]
             }
 
         }
     },
     methods: {
-        ...mapActions('task', ['get', 'post']),
+        ...mapActions('task', ['get', 'post', 'delete']),
         ...mapActions('taskCode', {
             getTaskCode_: 'get'
         }),
@@ -226,7 +240,7 @@ export default {
                 .catch()
         },
         formatToServer (id) {
-            console.log(this.taskCode[id - 1], id)
+            // console.log(this.taskCode[id - 1], id)
             return this.taskCode[id - 1].name
         },
         formateService (ids) {
@@ -239,26 +253,61 @@ export default {
             idArr = idArr.map(Number)
 
             return this.service.filter(item => {
-                console.log(idArr.indexOf(item.id) > -1, item.id)
+                // console.log(idArr.indexOf(item.id) > -1, item.id)
                 return idArr.indexOf(item.id) > -1
             })
         },
+
+        // 表格 Actions
+        taskDelete (task) {
+            this.delete(task).then(res => {
+                console.log(res)
+                this.getTask()
+            }
+            ).catch(err => {
+                console.log(err)
+            })
+        },
+
         // 模态框相关操作
         showModal () {
             this.visible = true
         },
-        handleOk (e) {
-            console.log(this.taskForm)
+        handleOk (e) { // 提交表单
+            this.$refs.taskForm.validate(valid => {
+                if (valid) {
+                    this.confirmLoading = true
+                    console.log(this.taskForm)
+                    const form = { ...this.taskForm }
+                    // 列表数组转字符串
+                    form.game_service = `[${form.game_service.toString()}]`
+                    this.post(form)
+                        .then(res => {
+                            this.confirmLoading = false
+                            this.visible = false
+                            console.log(res)
+                        })
+                        .catch()
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
         },
         handleCancel (e) {
             this.visible = false
         },
 
         // 表单相关
-
+        taskCodeChange (taskId) { // 任务类型改变
+            console.log(this.taskCode[taskId - 1])
+            // 通过选择项 设置关联分区表单项  是否显示
+            this.linkServiceShow = this.taskCode[taskId - 1].need_link
+            this.taskForm.game_service = []
+        },
         TimeChange (time, form, key) {
             form[key] = time.unix()
-            console.log(this.form, form[key])
+            console.log(this.form, form[key + 1])
         }
 
     },

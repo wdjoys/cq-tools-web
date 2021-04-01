@@ -12,16 +12,16 @@ export default class BaseModules {
         }
         this.mutations = {
             SET (state, objects) {
-                state[this.name] = objects
+                state[state.name] = objects
             },
             DELETE (state, object) {
-                state[this.name] = state[this.name].filter(item => item.id !== object.id)
+                state[state.name] = state[state.name].filter(item => item.id !== object.id)
             },
             ADD (state, object) {
-                state[this.name].push(object)
+                state[state.name].push(object)
             },
             PUT (state, object) {
-                state[this.name] = state[this.name].map(item => {
+                state[state.name] = state[state.name].map(item => {
                     if (item.id === object.id) {
                         return object
                     } else {
@@ -34,6 +34,7 @@ export default class BaseModules {
             get ({ commit, state }) {
                 return new Promise((resolve, reject) => {
                     if (state[state.name].length === 0) {
+                        // console.log(state, state.name, state[state.name].length, '长度')
                         state.request.get()
                             .then(res => {
                                 commit('SET', res)
