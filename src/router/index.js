@@ -9,4 +9,14 @@ const router = new VueRouter({
     mode: 'history'
 })
 
+router.beforeEach((to, from, next) => {
+    const userInfo = getUserInfo()
+    if (!userInfo && to.path !== '/user/login' && to.path.indexOf('/info/') === -1) {
+        next('/user/login')
+    } else if (to.path === '/user/login' && userInfo) {
+        next('/workplace/report-forms')
+    } else {
+        next()
+    }
+})
 export default router
