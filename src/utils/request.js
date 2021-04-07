@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '@/store'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
-import { authURL, USER_INFO } from '@/config/config.common.js'
+import { authURL, USER_TOKEN } from '@/config/config.common.js'
 
 const service = axios.create({
 
@@ -13,30 +13,30 @@ const service = axios.create({
 const err = error => {
     // 有响应
     if (error.response) {
-        const data = error.response.data
-        const user = Vue.session.get(USER_INFO)
-        if (error.response.status === 403) {
-            notification.error({
-                message: 'Forbidden',
-                description: '您的账号没有该操作权限！'
-            })
-        }
-        if (
-            error.response.status === 401 &&
-            !(data.result && data.result.isLogin)
-        ) {
-            notification.error({
-                message: 'Unauthorized',
-                description: 'Authorization verification failed'
-            })
-            if (user) {
-                store.dispatch('Logout').then(() => {
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 500)
-                })
-            }
-        }
+        // const data = error.response.data
+        // const user = Vue.session.get(USER_TOKEN)
+        // if (error.response.status === 403) {
+        //     notification.error({
+        //         message: 'Forbidden',
+        //         description: '您的账号没有该操作权限！'
+        //     })
+        // }
+        // if (
+        //     error.response.status === 401 &&
+        //     !(data.result && data.result.isLogin)
+        // ) {
+        //     notification.error({
+        //         message: 'Unauthorized',
+        //         description: 'Authorization verification failed'
+        //     })
+        //     if (user) {
+        //         store.dispatch('Logout').then(() => {
+        //             setTimeout(() => {
+        //                 window.location.reload()
+        //             }, 500)
+        //         })
+        //     }
+        // }
         // 超时
     } else if (error.message.indexOf('timeout') !== -1) {
         notification.error({
@@ -49,10 +49,18 @@ const err = error => {
 
 // request interceptor
 service.interceptors.request.use(config => {
-    const user = Vue.session.get(USER_INFO)
-    if (user) {
-        config.headers.Authorization = 'Bearer ' + user.token // 让每个请求携带自定义 token 请根据实际情况自行修改
+    // console.log(config)
+
+    if (config.url.indexOf(authURL) > -1) { // 请求我的服务器
+        const token = Vue.session.get(USER_TOKEN)
+        // console.log(token)
+        if (token) {
+            config.headers.Authorization = 'Bearer ' + token.access_token // 让每个请求携带自定义 token 请根据实际情况自行修改
+        }
+    } else { // 请求用户的服务器
+
     }
+
     // console.log(config)
     return config
 }, err)
@@ -70,7 +78,7 @@ const installer = {
 }
 
 const axiosGameServer = (config) => {
-    const gameURL = '//' + store.state.serverInfo.ip + ':7890/'
+    const gameURL = '//' + store.state.serverInfo + ':7890/'
     config.url = gameURL + config.url
     console.log('axios', config)
     return service(config)

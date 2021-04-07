@@ -11,12 +11,13 @@
                         <a-icon type="down" />
                     </a>
                     <a-menu slot="overlay">
-                        <a-menu-item key="0">
-                            <a href="http://www.alipay.com/">1st menu item</a>
+                        <a-menu-item :key="server.ip"
+                                     v-for="server in servers">
+
+                            <a-icon type="database" />{{server.name}}
+
                         </a-menu-item>
-                        <a-menu-item key="1">
-                            <a href="http://www.taobao.com/">2nd menu item</a>
-                        </a-menu-item>
+
                     </a-menu>
                 </a-dropdown>
             </a-col>
@@ -63,7 +64,7 @@
                             <a class="ant-dropdown-link"
                                @click="e => e.preventDefault()">
                                 <a-space>
-                                    <a-avatar icon="user" />xiaocao-dev
+                                    <a-avatar icon="user" />{{user.user_name}}
                                 </a-space>
                             </a>
                             <a-menu slot="overlay">
@@ -93,6 +94,7 @@
 <script>
 import { SrverInfo } from '@/api/restful/restful'
 import { bytesFormatter } from '@/utils/utils'
+import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
@@ -101,16 +103,22 @@ export default {
         }
     },
     methods: {
-        bytesFormatter
+        bytesFormatter,
+        ...mapActions('authCenter', ['getUserInfo', 'getServers'])
     },
     mounted () {
         SrverInfo.get().then(res => {
             this.serverInfo = res
             this.disks = JSON.parse(this.serverInfo.disk.replace(/'/g, '"').replace(/False/g, 'false'))
         })
+
+        if (Object.getOwnPropertyNames(this.user).length === 1) {
+            this.getUserInfo()
+            this.getServers()
+        }
     },
     computed: {
-
+        ...mapState('authCenter', ['user', 'servers'])
     }
 
 }

@@ -1,37 +1,10 @@
 import { axiosGameServer } from '@/utils/request'
 import URL from '@/config/config.api.url'
-
-class BaseRequest {
-    get () {
-        return axiosGameServer({
-            url: this.url,
-            method: 'get'
-            // data: parameter
-        })
-    }
-
-    post (parameter) {
-        return axiosGameServer({
-            url: this.url,
-            method: 'post',
-            data: parameter
-        })
-    }
-
-    put (parameter) {
-        return axiosGameServer({
-            url: this.url,
-            method: 'put',
-            data: parameter
-        })
-    }
-
-    delete (parameter) {
-        return axiosGameServer({
-            url: this.url,
-            method: 'delete',
-            data: parameter
-        })
+import { BaseRequest as BR } from './base'
+class BaseRequest extends BR {
+    constructor () {
+        super()
+        this.axios = axiosGameServer
     }
 }
 

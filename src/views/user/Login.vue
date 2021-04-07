@@ -83,11 +83,11 @@ export default {
             rules: {
                 username: [
                     { required: true, message: '请输入帐户名', trigger: 'blur' },
-                    { min: 5, max: 15, message: '用户名5-15个字符', trigger: 'blur' },
+                    { min: 6, max: 18, message: '用户名6-18个字符', trigger: 'blur' },
                     { pattern: '^[0-9a-zA-Z]+$', message: '用户名只能是字母和数字', trigger: 'blur' }],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
-                    { min: 5, max: 15, message: '密码5-15个字符', trigger: 'blur' }
+                    { min: 6, max: 18, message: '密码6-18个字符', trigger: 'blur' }
                 ]
 
             },
@@ -97,7 +97,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['Login']),
+        ...mapActions('authCenter', ['login']),
 
         handleSubmit () {
             const { Login } = this
@@ -105,29 +105,27 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true
-                    Login(this.formInline)
+                    console.log(111)
+                    this.login(this.formInline)
                         .then(res => {
                             this.loading = false
-                            if (!res.is_active) {
-                                this.errmessage = '用户被禁用，请联系管理员！'
-                                this.errorHidden = false
-                            } else if (res.token) {
-                                this.$router.push({ path: '/workplace/report-forms' })
+                            console.log(res)
+                            if (res.disable) {
+                                this.$notification('用户未激活，请验证邮箱！')
                             }
+                            this.$router.push({ path: '/workplace/home' })
                         })
                         .catch(err => {
                             this.loading = false
-                            if (err.response.status === 404) {
-                                console.log(err)
-                                this.errmessage = '用户名或者密码错误！'
-                                this.errorHidden = false
-                            }
-                            // this.$notification.error({
-                            //     message: '网络请求错误',
-                            //     description:
-                            //         '请检查你的本地网络连接情况与DNS服务器设置是否正常'
-                            // })
                             console.log(err)
+                            if (err.response.status === 401) {
+                                this.$notification.open({
+                                    message: '登录失败',
+                                    description:
+                                        '请确认用户密码是否匹配！',
+                                    icon: <a-icon type="safety" style="color: #ff0000" />
+                                })
+                            }
                         })
                 } else {
                     console.log('error submit!!')

@@ -6,16 +6,13 @@ import group from './modules/group'
 import task from './modules/task'
 import taskCode from './modules/task_code'
 import service from './modules/service'
-
+import authCenter from './modules/auth.center'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: {},
-        serverList: [],
-        serverInfo: {
-            ip: '127.0.0.1'
-        }
+
+        serverInfo: '127.0.0.1'
 
     },
     mutations: {
@@ -28,6 +25,7 @@ export default new Vuex.Store({
         group,
         task,
         service,
-        taskCode
+        taskCode,
+        authCenter
     }
 })

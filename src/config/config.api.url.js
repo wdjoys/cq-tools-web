@@ -1,9 +1,19 @@
 const URL = {
+    // 客户端api地址
     serverInfo: 'server-base-info/',
     gameService: 'game_service/',
     group: 'group/',
     task: 'task/',
-    taskCode: 'task_code/'
+    taskCode: 'task_code/',
+
+    // 中心认证服务器api地址
+    login: 'token',
+    register: 'register',
+    userInfo: 'users/me/',
+    server: 'server/',
+    card: 'card/',
+    actvice: 'actvice/',
+    serverAuthor: 'server/author/'
 
 }
 
