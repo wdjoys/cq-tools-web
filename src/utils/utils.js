@@ -1,3 +1,4 @@
+import { USER_INFO } from '@/config/config.common'
 export function bytesFormatter (value) {
     const arr = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -9,3 +10,18 @@ export function bytesFormatter (value) {
         }
     }
 }
+const getSession = (item) => {
+    const value = sessionStorage.getItem('vuejs__' + item)
+    const itemJson = JSON.parse(value)
+    return itemJson.value
+}
+
+const getUserInfo = () => {
+    try {
+        return getSession(USER_INFO)
+    } catch (error) {
+        return null
+    }
+}
+
+export { getSession, getUserInfo }

@@ -76,7 +76,7 @@
                                 <a-menu-item>
                                     <a-icon type="down" />个人中心
                                 </a-menu-item>
-                                <a-menu-item>
+                                <a-menu-item @click="logout_">
                                     <a-icon type="down" />退出登录
                                 </a-menu-item>
                             </a-menu>
@@ -104,7 +104,12 @@ export default {
     },
     methods: {
         bytesFormatter,
-        ...mapActions('authCenter', ['getUserInfo', 'getServers'])
+        ...mapActions('authCenter', ['getUserInfo', 'getServers', 'logout']),
+        logout_ () {
+            this.logout()
+            this.$router.push({ path: '/user/login' })
+            console.log(11111111)
+        }
     },
     mounted () {
         SrverInfo.get().then(res => {

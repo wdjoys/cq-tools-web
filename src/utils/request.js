@@ -13,30 +13,27 @@ const service = axios.create({
 const err = error => {
     // 有响应
     if (error.response) {
-        // const data = error.response.data
-        // const user = Vue.session.get(USER_TOKEN)
-        // if (error.response.status === 403) {
-        //     notification.error({
-        //         message: 'Forbidden',
-        //         description: '您的账号没有该操作权限！'
-        //     })
-        // }
-        // if (
-        //     error.response.status === 401 &&
-        //     !(data.result && data.result.isLogin)
-        // ) {
-        //     notification.error({
-        //         message: 'Unauthorized',
-        //         description: 'Authorization verification failed'
-        //     })
-        //     if (user) {
-        //         store.dispatch('Logout').then(() => {
-        //             setTimeout(() => {
-        //                 window.location.reload()
-        //             }, 500)
-        //         })
-        //     }
-        // }
+        const data = error.response.data
+        const user = Vue.session.get(USER_TOKEN)
+        if (error.response.status === 403) {
+            notification.error({
+                message: 'Forbidden',
+                description: '您的账号没有该操作权限！'
+            })
+        }
+        if (
+            error.response.status === 401 &&
+            !(data.result && data.result.isLogin)
+        ) {
+            notification.error({
+                message: 'Unauthorized',
+                description: 'Authorization verification failed'
+            })
+            if (user) {
+                store.dispatch('authCenter/logout')
+            }
+            window.location.reload()
+        }
         // 超时
     } else if (error.message.indexOf('timeout') !== -1) {
         notification.error({

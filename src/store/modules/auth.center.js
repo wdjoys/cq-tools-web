@@ -41,6 +41,11 @@ export default {
                     })
             })
         },
+        logout ({ state, commit }) {
+            Vue.session.clear()
+            Vue.session.clear()
+            commit('SET_TOKEN', null)
+        },
         getUserInfo ({ state, commit }) {
             return new Promise((resolve, reject) => {
                 getUserInfo()
