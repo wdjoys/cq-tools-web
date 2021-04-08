@@ -1,11 +1,11 @@
-import { login, getUserInfo, getServers } from '@/api/restful/auth.center'
+import { login, getUserInfo, getServers, getCards } from '@/api/restful/auth.center'
 import { USER_TOKEN } from '@/config/config.common'
 import Vue from 'vue'
 export default {
     namespaced: true,
     state: {
         user: {},
-        token: {},
+        cards: {},
         servers: [],
         serverInfo: {
             ip: '127.0.0.1'
@@ -16,8 +16,8 @@ export default {
         SET_USER (state, user) {
             state.user = user
         },
-        SET_TOKEN (state, token) {
-            state.token = token
+        SET_CARDS (state, cards) {
+            state.cards = cards
         },
         SET_SERVERS (state, servers) {
             state.servers = servers
@@ -63,6 +63,18 @@ export default {
                 getServers()
                     .then(res => {
                         commit('SET_SERVERS', res)
+                        resolve(res)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+            })
+        },
+        getCards ({ state, commit }) {
+            return new Promise((resolve, reject) => {
+                getCards()
+                    .then(res => {
+                        commit('SET_CARDS', res)
                         resolve(res)
                     })
                     .catch(err => {

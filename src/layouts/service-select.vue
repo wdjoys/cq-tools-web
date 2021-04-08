@@ -72,7 +72,7 @@
                         </span>
                         <a-menu slot="overlay">
                             <a-menu-item>
-                                <a-icon type="account-book" /> 授权管理
+                                <a-icon type="account-book" />授权管理
                             </a-menu-item>
                             <a-menu-item>
                                 <a-icon type="user" />个人中心
