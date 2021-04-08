@@ -12,11 +12,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
 
-        serverInfo: '127.0.0.1'
+        serverInfo: {}
 
     },
     mutations: {
-
+        SET_SERVER_INFO (state, serverInfo) {
+            state.serverInfo = serverInfo
+            Vue.session.set('server', serverInfo)
+        }
+    },
+    getters: {
+        get_server: state => {
+            const server = Vue.session.get('server')
+            if (Object.keys(state.serverInfo).length === 0) {
+                state.serverInfo = server
+            }
+            return state.serverInfo
+        }
     },
     actions: {
 

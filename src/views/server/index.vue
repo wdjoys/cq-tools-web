@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <a-button type="primary"
-                  style="margin:10px 0px"
+                  style="margin-bottom:10px"
                   @click="create">创建分区</a-button>
         <service />
         <createService ref="createService" />

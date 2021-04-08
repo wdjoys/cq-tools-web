@@ -49,11 +49,24 @@ export const RouterMap = [
                         meta: { title: '负载监控' }
                     },
                     {
-                        path: 'user',
-                        name: 'user',
-                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
+                        path: 'me',
+                        name: 'me',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/me'),
                         meta: { title: '用户管理' }
+                    },
+                    {
+                        path: 'auth',
+                        name: 'auth',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/server'),
+                        meta: { title: '授权管理' }
+                    },
+                    {
+                        path: 'promote',
+                        name: 'promote',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/promote'),
+                        meta: { title: '推荐返利' }
                     }
+
                 ]
             },
             {

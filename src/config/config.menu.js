@@ -32,9 +32,26 @@ export const menus = [
 
     },
     {
-        label: '用户管理',
+        label: '管理中心',
         icon: 'user',
-        to: 'monitor'
+        to: 'monitor',
+        children: [
+            {
+                label: '授权管理',
+                icon: 'user',
+                to: 'auth'
+            }, {
+                label: '用户管理',
+                icon: 'user',
+                to: 'me'
+            },
+            {
+                label: '推荐返利',
+                icon: 'user',
+                to: 'promote'
+            }
+
+        ]
 
     }
 ]

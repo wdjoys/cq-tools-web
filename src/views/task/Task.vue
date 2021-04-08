@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <a-button type="primary"
-                  style="margin:10px 0px;"
+                  style="margin-bottom:10px"
                   @click="showModal">创建任务</a-button>
         <a-table :columns="columns"
                  :data-source="task"

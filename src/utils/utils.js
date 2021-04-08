@@ -1,4 +1,4 @@
-import { USER_INFO } from '@/config/config.common'
+import { USER_TOKEN } from '@/config/config.common'
 export function bytesFormatter (value) {
     const arr = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -18,7 +18,7 @@ const getSession = (item) => {
 
 const getUserInfo = () => {
     try {
-        return getSession(USER_INFO)
+        return getSession(USER_TOKEN)
     } catch (error) {
         return null
     }

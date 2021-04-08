@@ -21,14 +21,13 @@
                         </a-input>
                     </a-form-model-item>
                     <a-form-model-item prop="password">
-                        <a-input v-model="formInline.password"
-                                 size="large"
-                                 type="password"
-                                 placeholder="请输入密码">
+                        <a-input-password v-model="formInline.password"
+                                          size="large"
+                                          placeholder="请输入密码">
                             <a-icon slot="prefix"
                                     type="lock"
                                     style="color:rgba(0,0,0,.25)" />
-                        </a-input>
+                        </a-input-password>
                     </a-form-model-item>
                     <a-form-model-item :hidden="errorHidden">
                         <a-alert :message="errmessage "
@@ -40,7 +39,7 @@
                             24小时自动登录
                         </a-checkbox>
                         <a style="float:right"
-                           @click="()=>{LostPasswordShow=true}">忘记密码</a>
+                           @click="()=>{$refs.LostPassword.showModal()}">忘记密码</a>
                     </a-form-model-item>
                     <a-form-model-item>
                         <a-button type="primary"
@@ -58,9 +57,9 @@
                 <qr-login style="width:250px" />
             </a-tab-pane> -->
         </a-tabs>
-        <a @click="()=>{registerShow=true}">注册用户</a>
-        <Register v-model="registerShow" />
-        <LostPassword v-model="LostPasswordShow" />
+        <a @click="()=>{$refs.Register.showModal()}">注册用户</a>
+        <Register ref="Register" />
+        <LostPassword ref="LostPassword" />
     </div>
 </template>
 <script>
@@ -91,9 +90,8 @@ export default {
                 ]
 
             },
-            loading: false,
-            registerShow: false,
-            LostPasswordShow: false
+            loading: false
+
         }
     },
     methods: {
@@ -105,7 +103,6 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true
-                    console.log(111)
                     this.login(this.formInline)
                         .then(res => {
                             this.loading = false

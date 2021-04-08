@@ -31,16 +31,17 @@ const err = error => {
             })
             if (user) {
                 store.dispatch('authCenter/logout')
+                window.location.reload()
             }
-            window.location.reload()
         }
         // 超时
-    } else if (error.message.indexOf('timeout') !== -1) {
+    } else if (error.message.indexOf('timeout') !== -1 || error.message.indexOf('Network Error') !== -1) {
         notification.error({
             message: 'Request Timeout',
             description: '请检查本地网络，或联系管理员'
         })
     }
+    console.log(error.message)
     return Promise.reject(error)
 }
 
@@ -75,7 +76,11 @@ const installer = {
 }
 
 const axiosGameServer = (config) => {
-    const gameURL = '//' + store.state.serverInfo + ':7890/'
+    if (!store.getters.get_server) {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject('无服务器ip')
+    }
+    const gameURL = '//' + store.getters.get_server.ip + ':7890/'
     config.url = gameURL + config.url
     console.log('axios', config)
     return service(config)
