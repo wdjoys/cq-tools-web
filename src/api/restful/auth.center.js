@@ -49,7 +49,7 @@ function getCards () {
 
 function sendActiceMessage () {
     return axiosAuthServer({
-        url: URL.actvice,
+        url: URL.active,
         method: 'post'
 
     })
@@ -72,4 +72,39 @@ function serverAuthor (params) {
 
     })
 }
-export { login, getUserInfo, getServers, getCards, sendActiceMessage, register, serverAuthor }
+
+function deleteServer (params) {
+    return axiosAuthServer({
+        url: URL.server,
+        method: 'delete',
+        data: params
+
+    })
+}
+
+function getCoinLogs () {
+    return axiosAuthServer({
+        url: URL.coinLogs,
+        method: 'get'
+
+    })
+}
+function getCoinLogType () {
+    return axiosAuthServer({
+        url: URL.coinLogType,
+        method: 'get'
+
+    })
+}
+
+function changeEmail (email) {
+    return axiosAuthServer({
+        url: URL.email + '?email=' + email,
+        method: 'put'
+
+    })
+}
+export {
+    login, getUserInfo, getServers, getCards, sendActiceMessage, register, serverAuthor, deleteServer, getCoinLogs, getCoinLogType,
+    changeEmail
+}

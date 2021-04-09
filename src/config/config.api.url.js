@@ -12,8 +12,11 @@ const URL = {
     userInfo: 'users/me/',
     server: 'server/',
     card: 'card/',
-    actvice: 'actvice/',
-    serverAuthor: 'server/author/'
+    active: 'active/',
+    serverAuthor: 'server/author/',
+    coinLogs: 'coin_logs/',
+    coinLogType: 'coin_log_type/',
+    email: 'email/'
 
 }
 
