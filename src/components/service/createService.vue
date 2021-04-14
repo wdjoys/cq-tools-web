@@ -129,7 +129,7 @@ export default {
                                 })
                                 .catch()
                             task.time = res.start_time
-                            task.task_code = 2
+                            task.task_code = 12
                             this.postTask(task) // 正式开区任务
                                 .then(res => {
                                     this.$message.success('开区任务创建成功！')

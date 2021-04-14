@@ -104,6 +104,11 @@
                         </a-select-option>
                     </a-select>
                 </a-form-model-item>
+                <a-form-model-item label="合区名称"
+                                   prop="parameters"
+                                   v-show="parametersShow">
+                    <a-input v-model="taskForm.parameters" />
+                </a-form-model-item>
                 <a-form-model-item label="任务模式"
                                    prop="model">
                     <a-radio-group name="radioGroup"
@@ -117,13 +122,13 @@
 
                     </a-radio-group>
                 </a-form-model-item>
-                <a-form-model-item label="执行时间"
+                <a-form-model-item label="间隔时间"
                                    v-if="taskForm.model===1"
                                    prop="time">
                     <a-input v-model="taskForm.time"
                              suffix="分钟" />
                 </a-form-model-item>
-                <a-form-model-item label="间隔时间"
+                <a-form-model-item label="执行时间"
                                    prop="time"
                                    v-else>
                     <a-date-picker show-time
@@ -181,10 +186,26 @@ export default {
                 model: 0,
                 task_code: null,
                 game_service: [],
-                time: null
+                time: null,
+                parameters: null
+
             },
             linkServiceShow: true,
+            parametersShow: false,
             taskFormRule: {
+                parameters: [
+                    {
+                        validator: (rule, value, callback) => {
+                            if (this.parametersShow === true && value.length === 0) {
+                                callback(new Error('请填写合区后的名称'))
+                            } else {
+                                callback()
+                            }
+                        },
+                        trigger: 'change',
+                        message: '请填写合区后的名称'
+
+                    }],
                 task_code: [
                     { required: true, message: '请选择任务', trigger: 'blur' }],
                 time: [
@@ -275,12 +296,13 @@ export default {
         },
         handleOk (e) { // 提交表单
             this.$refs.taskForm.validate(valid => {
+                console.log(valid, 1111111111)
                 if (valid) {
                     this.confirmLoading = true
                     console.log(this.taskForm)
                     const form = { ...this.taskForm }
                     // 列表数组转字符串
-                    form.game_service = `[${form.game_service.toString()}]`
+                    form.game_service = `[${form.game_service.toString()},]`
                     this.post(form)
                         .then(res => {
                             this.confirmLoading = false
@@ -304,6 +326,7 @@ export default {
             // 通过选择项 设置关联分区表单项  是否显示
             this.linkServiceShow = this.taskCode[taskId - 1].need_link
             this.taskForm.game_service = []
+            this.parametersShow = this.taskCode[taskId - 1].name === '合区'
         },
         TimeChange (time, form, key) {
             form[key] = time.unix()
