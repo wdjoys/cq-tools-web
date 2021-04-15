@@ -40,15 +40,15 @@ export const menus = [
                 label: '授权管理',
                 icon: 'user',
                 to: 'auth'
+            },
+            {
+                label: '基本设置',
+                icon: 'user',
+                to: 'server-setting'
             }, {
                 label: '用户管理',
                 icon: 'user',
                 to: 'me'
-            },
-            {
-                label: '推荐返利',
-                icon: 'user',
-                to: 'promote'
             }
 
         ]

@@ -61,10 +61,10 @@ export const RouterMap = [
                         meta: { title: '授权管理' }
                     },
                     {
-                        path: 'promote',
-                        name: 'promote',
-                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/promote'),
-                        meta: { title: '推荐返利' }
+                        path: 'server-setting',
+                        name: 'server-setting',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/ServerSetting'),
+                        meta: { title: '基本设置' }
                     }
 
                 ]

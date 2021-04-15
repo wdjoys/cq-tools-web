@@ -5,6 +5,7 @@ const URL = {
     group: 'group/',
     task: 'task/',
     taskCode: 'task_code/',
+    config: 'config/',
 
     // 中心认证服务器api地址
     login: 'token',
