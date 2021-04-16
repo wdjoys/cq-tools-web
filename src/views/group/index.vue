@@ -40,7 +40,7 @@
 
                     <p><span>分组列表地址：</span>
                         <input :ref="`${group.id}-url`"
-                               v-model="group.root_server_path"
+                               :value="baseUrl+group.uuid+'.txt'"
                                class="text"
                                readonly />
                         <a-icon type="copy"
@@ -66,23 +66,23 @@
     </div>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions } = createNamespacedHelpers('group')
+import { mapState, mapActions, mapGetters } from 'vuex'
+
 export default {
     data () {
         return {
-            groups: []
+
         }
     },
+    computed: {
+        ...mapState('group', { groups: 'group' }),
+        ...mapState('config', { config: 'config' }),
+        ...mapGetters('config', ['baseUrl'])
+    },
     methods: {
-        ...mapActions(['get', 'delete']),
-        getGroup () {
-            this.get()
-                .then(res => {
-                    this.groups = res
-                })
-                .catch()
-        },
+        ...mapActions('config', { configActionGet: 'get' }),
+        ...mapActions('group', ['get', 'delete']),
+
         delete_group (group) {
             this.delete(group)
                 .then(res => {
@@ -99,8 +99,10 @@ export default {
             this.$message.success('复制成功')
         }
     },
-    mounted () {
-        this.getGroup()
+    async mounted () {
+        // 如果 config 不存在就请求
+        this.groups.length !== 0 || this.get()
+        this.config.length !== 0 || await this.configActionGet()
     }
 }
 </script>

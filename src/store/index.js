@@ -6,7 +6,9 @@ import group from './modules/group'
 import task from './modules/task'
 import taskCode from './modules/task_code'
 import service from './modules/service'
+import config from './modules/config'
 import authCenter from './modules/auth.center'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -38,6 +40,7 @@ export default new Vuex.Store({
         task,
         service,
         taskCode,
+        config,
         authCenter
     }
 })
