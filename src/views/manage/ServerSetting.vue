@@ -53,9 +53,11 @@ export default {
         ...mapMutations('config', { configMutationSet: 'SET' }),
         submit () {
             // 查找出数据变动的数据列表，并更新元数据列表
-            const changedConfig = this.config.filter(item => {
+            const configTemp = [...this.config]
+
+            const changedConfig = configTemp.filter(item => {
                 if (item.value !== this.config_obj[item.group][item.name]) {
-                    this.configMutationSet(this.config_obj[item.group][item.name])
+                    item.value = this.config_obj[item.group][item.name]
                     return true
                 } else {
                     return false
@@ -67,6 +69,7 @@ export default {
             if (changedConfig.length === 0) {
                 this.$message.error('配置数据无更新')
             } else {
+                this.configMutationSet(configTemp)
                 new Config().put(changedConfig)
                     .then(res => {
                         console.log(res)
@@ -93,6 +96,7 @@ export default {
     }
 }
 </script>
+
 <style lang='less' scoped>
 .main {
     // background-color: #fff;

@@ -79,8 +79,9 @@
         <a-divider></a-divider>
         <h1 class="title"># 金币记录</h1>
         <a-table :columns="columns"
-                 :data-source="coinLogs"
+                 :data-source="coinLogs_"
                  size="middle"
+                 rowKey="id"
                  style="background-color:#fff">
             <span slot="coin"
                   slot-scope="text,record">
@@ -181,12 +182,19 @@ export default {
         }
     },
     computed: {
-        ...mapState('authCenter', ['user', 'coinLogs', 'coinLogType'])
+        ...mapState('authCenter', ['user', 'coinLogs', 'coinLogType']),
+        coinLogs_ () {
+            const coinLogs = [...this.coinLogs]
+            coinLogs.map((item, i) => {
+                item.id = i
+            })
+            return coinLogs
+        }
     },
     mounted () {
         // console.log(this.coinLogs, this.coinLogs.length === 0, '1111')
-        this.coinLogs.length === 0 && this.getCoinLogs()
         this.coinLogType.length === 0 && this.getCoinLogType()
+        this.coinLogs.length === 0 && this.getCoinLogs()
     }
 }
 </script>

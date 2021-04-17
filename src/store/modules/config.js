@@ -15,7 +15,9 @@ const configExtends = {
     },
     getters: {
         baseUrl: state => {
-            return `https://${state.configObj.system.cosBucketName}-${state.configObj.cos.APPID}.cos.${state.configObj.cos.Region}.myqcloud.com/`
+            return state.config.length !== 0
+                ? `https://${state.configObj.system.cosBucketName}-${state.configObj.cos.APPID}.cos.${state.configObj.cos.Region}.myqcloud.com/`
+                : ''
         }
     },
     actions: {

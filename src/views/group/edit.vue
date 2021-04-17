@@ -82,10 +82,11 @@ export default {
                 时: 'hour',
                 分: 'minute',
                 秒: 'second',
-                分区列表开始: 'start',
-                分区列表结束: 'end'
+                分区列表位置: 'list-block'
+
             },
             sub_vars: {
+                分区名称: 'name',
                 电信ip: 'ct_ip',
                 联通ip: 'cu_ip',
                 移动ip: 'cm_ip',

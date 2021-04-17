@@ -40,7 +40,7 @@
 
                     <p><span>分组列表地址：</span>
                         <input :ref="`${group.id}-url`"
-                               :value="baseUrl+group.uuid+'.txt'"
+                               :value="baseUrl+'list/'+group.uuid+'.txt'"
                                class="text"
                                readonly />
                         <a-icon type="copy"
@@ -57,7 +57,7 @@
                                 @click="copy(`${group.id}-path`)" />
                     </p>
 
-                    <p>列表更新时间：{{$moment(group.update_time*1000).format("YYYY MMMM Do , hh:mm:ss")}}</p>
+                    <p>列表更新时间：{{$moment(group.update_time*1000).format("YYYY-MM-D , hh:mm:ss")}}</p>
                 </a-card>
             </a-col>
 
@@ -99,10 +99,10 @@ export default {
             this.$message.success('复制成功')
         }
     },
-    async mounted () {
+    mounted () {
         // 如果 config 不存在就请求
+        this.config.length !== 0 || this.configActionGet()
         this.groups.length !== 0 || this.get()
-        this.config.length !== 0 || await this.configActionGet()
     }
 }
 </script>
@@ -112,7 +112,6 @@ export default {
 
     // &:nth-child(2) {
     // }
-
     .text {
         width: calc(100% - 130px);
         height: 24px;

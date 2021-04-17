@@ -45,11 +45,9 @@
                     无
                 </span>
                 <span v-else>
-
                     <p v-for="service in formateService(services_id)"
                        :key="service.id">
                         {{service.name}}
-
                     </p>
                 </span>
             </span>
@@ -142,7 +140,7 @@
 </template>
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 const columns = [
     {
@@ -178,9 +176,7 @@ export default {
 
             visible: false,
             confirmLoading: false,
-            task: [],
-            taskCode: [{ name: '' }],
-            service: [],
+
             columns,
             taskForm: {
                 model: 0,
@@ -236,30 +232,6 @@ export default {
             getService_: 'get'
         }),
 
-        getTask () {
-            this.get()
-                .then(res => {
-                    this.task = res
-                    console.log(res)
-                })
-                .catch()
-        },
-        getTaskCode () {
-            this.getTaskCode_()
-                .then(res => {
-                    this.taskCode = res
-                    console.log(this.taskCode)
-                })
-                .catch()
-        },
-        getService () {
-            this.getService_()
-                .then(res => {
-                    this.service = res
-                    console.log(this.service)
-                })
-                .catch()
-        },
         formatToServer (id) {
             // console.log(this.taskCode[id - 1], id)
             return this.taskCode[id - 1].name
@@ -334,10 +306,16 @@ export default {
         }
 
     },
+    computed: {
+        ...mapState('task', ['task']),
+        ...mapState('taskCode', ['taskCode']),
+        ...mapState('service', ['service'])
+    },
     mounted () {
-        this.getTaskCode()
-        this.getService()
-        this.getTask()
+        this.taskCode.length !== 0 || this.getTaskCode_()
+        this.task.length !== 0 || this.get()
+
+        this.service.length !== 0 || this.getService_()
     }
 }
 </script>
