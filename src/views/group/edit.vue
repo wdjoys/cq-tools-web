@@ -21,6 +21,11 @@
                 <a-input v-model="form.root_server_path">
                 </a-input>
             </a-form-model-item>
+            <a-form-model-item label="合区工具路径"
+                               prop="merge_tool_path">
+                <a-input v-model="form.merge_tool_path">
+                </a-input>
+            </a-form-model-item>
             <a-form-model-item label="可用变量">
                 <template v-for="(v,k) in vars">
 
@@ -110,7 +115,8 @@ export default {
                 name: '',
                 root_server_path: '',
                 template: '',
-                template_sub: ''
+                template_sub: '',
+                merge_tool_path: ''
             },
             formRules: {
                 name: [
@@ -127,6 +133,10 @@ export default {
                 ],
                 template_sub: [
                     { required: true, message: '分区模板必填', trigger: 'blur' }
+
+                ],
+                merge_tool_path: [
+                    { required: true, message: '合区工具路径必填', trigger: 'blur' }
 
                 ]
             }

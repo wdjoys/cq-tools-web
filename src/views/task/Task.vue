@@ -54,7 +54,6 @@
             <span slot="action"
                   slot-scope="text, record">
 
-                <a-divider type="vertical" />
                 <a-popconfirm title="Are you sure delete this task?"
                               ok-text="Yes"
                               cancel-text="No"
