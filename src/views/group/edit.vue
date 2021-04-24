@@ -92,6 +92,7 @@ export default {
             },
             sub_vars: {
                 分区名称: 'name',
+                开区状态: 'status',
                 电信ip: 'ct_ip',
                 联通ip: 'cu_ip',
                 移动ip: 'cm_ip',

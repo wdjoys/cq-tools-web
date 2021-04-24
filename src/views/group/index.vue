@@ -57,7 +57,7 @@
                                 @click="copy(`${group.id}-path`)" />
                     </p>
 
-                    <p>列表更新时间：{{$moment(group.update_time*1000).format("YYYY-MM-D , hh:mm:ss")}}</p>
+                    <p>列表更新时间：{{$moment(group.update_time*1000).format("YYYY-MM-D , HH:mm:ss")}}</p>
                 </a-card>
             </a-col>
 

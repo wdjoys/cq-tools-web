@@ -1,6 +1,7 @@
+import store from '@/store'
 class ServerLoad {
     constructor (wsUrl, receviFunc) {
-        this.ws = new WebSocket(`ws://localhost:7890/${wsUrl}`)
+        this.ws = new WebSocket(`ws://${store.getters.get_server.ip}:7890/${wsUrl}`)
         this.ws.onmessage = (event) => { receviFunc(this.receviMessage(event)) }
 
         // this.ws.onmessage = this.websocketonmessage;
