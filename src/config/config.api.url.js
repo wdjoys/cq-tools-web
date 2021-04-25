@@ -6,6 +6,7 @@ const URL = {
     task: 'task/',
     taskCode: 'task_code/',
     config: 'config/',
+    service_log: 'service-log/',
 
     // 中心认证服务器api地址
     login: 'token',

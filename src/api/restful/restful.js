@@ -45,6 +45,13 @@ class TaskCode extends BaseRequest {
     }
 }
 
+class ServiceLog extends BaseRequest {
+    constructor () {
+        super()
+        this.url = URL.service_log
+    }
+}
+
 class Config extends BaseRequest {
     constructor () {
         super()
@@ -52,4 +59,4 @@ class Config extends BaseRequest {
     }
 }
 
-export { SrverInfo, GameService, Group, Task, TaskCode, Config }
+export { SrverInfo, GameService, Group, Task, TaskCode, Config, ServiceLog }

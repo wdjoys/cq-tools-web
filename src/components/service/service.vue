@@ -34,7 +34,10 @@
                 <a-divider type="vertical" />
                 <a>合区</a>
                 <a-divider type="vertical" />
-                <a>M2日志</a>
+                <a @click="()=>{
+                     $refs.m2log.service_id = record.id
+                     $refs.m2log.getM2Log()
+                    $refs.m2log.visible=true}">M2日志</a>
                 <a-divider type="vertical" />
                 <a>网关日志</a>
                 <a-divider type="vertical" />
@@ -45,11 +48,12 @@
                 </a-popconfirm>
             </span>
         </a-table>
+        <M2Log ref='m2log' />
     </div>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-
+import M2Log from './M2Log'
 const columns = [
     {
         dataIndex: 'name',
@@ -90,6 +94,7 @@ const columns = [
 ]
 
 export default {
+    components: { M2Log },
     data () {
         return {
             columns

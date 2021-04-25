@@ -1,7 +1,13 @@
 class BaseRequest {
-    get () {
+    get (parameter) {
+        let url = this.url + '?'
+        for (const key in parameter) {
+            if (parameter[key]) {
+                url += `${key}=${parameter[key]}&`
+            }
+        }
         return this.axios({
-            url: this.url,
+            url,
             method: 'get'
             // data: parameter
         })
