@@ -139,7 +139,7 @@
 </template>
 <script>
 
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 const columns = [
     {
@@ -223,7 +223,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('task', ['get', 'post', 'delete']),
+        ...mapActions('task', ['get', 'post', 'delete', 'task_not_execute']),
         ...mapActions('taskCode', {
             getTaskCode_: 'get'
         }),
@@ -309,12 +309,17 @@ export default {
         ...mapState('task', ['task']),
         ...mapState('taskCode', ['taskCode']),
         ...mapState('service', ['service'])
-    },
-    mounted () {
-        this.taskCode.length !== 0 || this.getTaskCode_()
-        this.task.length !== 0 || this.get()
 
+    },
+    async mounted () {
+        this.taskCode.length !== 0 || await this.getTaskCode_()
+        this.task.length !== 0 || this.get()
         this.service.length !== 0 || this.getService_()
+
+        // 定时检查任务
+        setInterval(async () => {
+            await this.task_not_execute() && this.getService_()
+        }, 2000)
     }
 }
 </script>

@@ -33,19 +33,15 @@ export default class BaseModules {
         this.actions = {
             get ({ commit, state }) {
                 return new Promise((resolve, reject) => {
-                    if (state[state.name].length === 0) {
-                        // console.log(state, state.name, state[state.name].length, '长度')
-                        state.request.get()
-                            .then(res => {
-                                commit('SET', res)
-                                resolve(res)
-                            })
-                            .catch(err => {
-                                reject(err)
-                            })
-                    } else {
-                        resolve(state[state.name])
-                    }
+                    // console.log(state, state.name, state[state.name].length, '长度')
+                    state.request.get()
+                        .then(res => {
+                            commit('SET', res)
+                            resolve(res)
+                        })
+                        .catch(err => {
+                            reject(err)
+                        })
                 })
             },
             post ({ commit, state }, object) {

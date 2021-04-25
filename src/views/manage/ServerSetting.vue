@@ -91,7 +91,7 @@ export default {
             // console.log(item.name, item.value)
             this.config_obj[item.group][item.name] = item.value
         })
-        console.log(this.config_obj, this.config)
+        // console.log(this.config_obj, this.config)
         this.dataAlready = true
     }
 }

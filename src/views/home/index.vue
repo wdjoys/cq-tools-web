@@ -109,7 +109,7 @@ export default {
                 //         this.$set(this.serverInfo[item], key, this.serverInfo[item][key])
                 //     }
                 // }
-                console.log(this.serverInfo, '首次加载')
+                // console.log(this.serverInfo, '首次加载')
             } else {
                 // 其他 更新数据
                 this.$refs.network.update(data)

@@ -99,9 +99,9 @@ export default {
             this.$message.success('复制成功')
         }
     },
-    mounted () {
+    async mounted () {
         // 如果 config 不存在就请求
-        this.config.length !== 0 || this.configActionGet()
+        this.config.length !== 0 || await this.configActionGet()
         this.groups.length !== 0 || this.get()
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-table :columns="columns"
-                 :data-source="data"
+                 :data-source="service"
                  :pagination="false"
                  class="main"
                  rowKey="id">
@@ -48,7 +48,7 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 const columns = [
     {
@@ -92,12 +92,12 @@ const columns = [
 export default {
     data () {
         return {
-            data: [],
             columns
         }
     },
     methods: {
         ...mapActions('service', ['get', 'delete']),
+        ...mapActions('task', ['task_not_execute']),
         formateState (record) {
             const nowTimeStamp = new Date().getTime() / 1000
             if (record.state) {
@@ -114,11 +114,7 @@ export default {
                 }
             }
         },
-        getTableData () {
-            this.get().then(res => {
-                this.data = res
-            })
-        },
+
         delete_ (record) {
             this.delete(record)
                 .then(res => {
@@ -128,8 +124,17 @@ export default {
         }
 
     },
-    mounted () {
-        this.getTableData()
+    computed: {
+        ...mapState('service', ['service'])
+
+    },
+    async mounted () {
+        this.service.length === 0 && this.get()
+
+        // 定时检查任务
+        setInterval(async () => {
+            await this.task_not_execute() && this.get()
+        }, 2000)
     }
 }
 </script>

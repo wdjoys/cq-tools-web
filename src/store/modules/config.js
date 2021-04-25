@@ -74,9 +74,11 @@ const configExtends = {
     }
 
 }
+// 扩展属性
 Object.assign(config.state, configExtends.state)
 Object.assign(config.actions, configExtends.actions)
 Object.assign(config.mutations, configExtends.mutations)
+// 新建属性
 config.getters = configExtends.getters
-console.log(config, 11111111111)
+
 export default config
