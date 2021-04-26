@@ -1,7 +1,8 @@
 <template>
     <div class="main">
         <a-button type="primary"
-                  style="margin-bottom:10px"
+                  icon="plus"
+                  style="margin-bottom:15px"
                   @click="showModal">创建任务</a-button>
         <a-table :columns="columns"
                  :data-source="task"
@@ -326,8 +327,7 @@ export default {
 
 <style lang="less" scoped>
 .main {
-    .table {
-        background-color: #fff;
-    }
+    background-color: #fff;
+    padding: 20px;
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
     <div class="main">
         <a-button type="primary"
-                  style="margin-bottom:10px"
+                  icon="plus"
+                  style="margin-bottom:15px"
                   @click="()=>{visible=true;inputDisable=false}">创建授权</a-button>
         <a-table class="table"
                  :columns="columns"
@@ -212,9 +213,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-    .table {
-        background-color: #fff;
-    }
+    background-color: #fff;
+    padding: 20px;
+
     .text {
         height: 24px;
         background-color: rgb(213, 221, 255);

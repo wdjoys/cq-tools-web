@@ -39,6 +39,10 @@
                 </template>
 
             </a-menu>
+
+            <a-icon slot="trigger"
+                    :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
+
         </a-layout-sider>
         <a-layout>
             <a-layout-header style="background: #fff; padding: 0">

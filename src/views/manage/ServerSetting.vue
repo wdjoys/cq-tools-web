@@ -2,33 +2,41 @@
     <div class="main">
 
         <div v-if="dataAlready">
-            <h1 class="title"># 基本配置</h1>
-            <a-form-model :labelCol="{span:5}"
-                          :wrapperCol="{span:14}"
-                          v-model="config.base"
-                          class="form">
+            <div class="box">
+                <h1 class="title"># 基本配置</h1>
+                <a-divider></a-divider>
+                <a-form-model :labelCol="{span:5}"
+                              :wrapperCol="{span:14}"
+                              v-model="config.base"
+                              class="form">
 
-                <a-form-model-item :label="key"
-                                   v-for="(value,key) in config_obj.base"
-                                   :key="key">
-                    <a-input v-model="config_obj.base[key]" />
-                </a-form-model-item>
-            </a-form-model>
+                    <a-form-model-item :label="key"
+                                       v-for="(value,key) in config_obj.base"
+                                       :key="key">
+                        <a-input v-model="config_obj.base[key]" />
+                    </a-form-model-item>
+                </a-form-model>
+            </div>
+
             <a-divider></a-divider>
-            <h1 class="title"># 腾讯云配置</h1>
-            <a-form-model :labelCol="{span:5}"
-                          :wrapperCol="{span:14}"
-                          v-model="config_obj.cos"
-                          class="form">
+            <div class="box">
+                <h1 class="title"># 腾讯云配置</h1>
+                <a-divider></a-divider>
+                <a-form-model :labelCol="{span:5}"
+                              :wrapperCol="{span:14}"
+                              v-model="config_obj.cos"
+                              class="form">
 
-                <a-form-model-item :label="key"
-                                   v-for="(value,key) in config_obj.cos"
-                                   :key="key">
-                    <a-input v-model="config_obj.cos[key]" />
-                </a-form-model-item>
-            </a-form-model>
+                    <a-form-model-item :label="key"
+                                       v-for="(value,key) in config_obj.cos"
+                                       :key="key">
+                        <a-input v-model="config_obj.cos[key]" />
+                    </a-form-model-item>
+                </a-form-model>
+
+            </div>
             <a-button type="primary"
-                      style="width:100%;margin:25px 0px;"
+                      style="width:100%;margin:35px 0px;"
                       @click="submit">全部提交</a-button>
         </div>
         <a-skeleton active
@@ -98,6 +106,10 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.box {
+    background-color: #fff;
+    padding: 20px;
+}
 .main {
     // background-color: #fff;
     // min-height: 500px;

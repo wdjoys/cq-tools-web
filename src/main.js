@@ -5,7 +5,7 @@ import store from './store'
 // import { VueAxios } from './utils/request'
 import {
     DatePicker, Tabs, FormModel, Input, Button, Checkbox, Icon, Layout, Radio, Pagination,
-    Menu, Alert, Avatar, Dropdown, Table, Tag, Divider, Modal, message, Popconfirm,
+    Menu, Alert, Avatar, Dropdown, Table, Tag, Divider, Modal, message, Popconfirm, Drawer,
     Select, Card, Row, Col, Steps, Result, Tree, InputNumber, Descriptions, Badge, notification, Switch,
     TreeSelect, Statistic, Transfer, Spin, Upload, List, Skeleton, Breadcrumb, Carousel, Space, Popover, Progress
 } from 'ant-design-vue'
@@ -37,6 +37,8 @@ Vue.use(Storage_, options1)
 Vue.config.productionTip = false
 
 // antv组件
+
+Vue.use(Drawer)
 Vue.use(DatePicker)
 Vue.use(Tabs)
 Vue.use(FormModel)

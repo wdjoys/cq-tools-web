@@ -7,9 +7,10 @@
                  maskClosable
                  keyboard
                  centered
-                 :bodyStyle="{height:'500px',padding:'15px'}">
+                 :bodyStyle="{height:'505px',padding:'15px'}">
             <textarea disabled
                       readonly
+                      wrap=off
                       v-model="text"
                       class="textarea">
             </textarea>
@@ -39,23 +40,23 @@ export default {
     },
     methods: {
 
-        getM2Log (file_name = null, start_line = null) {
+        getM2Log (file_name = null, page = null) {
             // eslint-disable-next-line camelcase
             const service_id = this.service_id
-            new ServiceLog().get({ service_id, file_name, start_line })
+            new ServiceLog().get({ service_id, file_name, page })
                 .then(res => {
                     this.text = ''
                     res.text.forEach(element => {
                         this.text += element
                     })
-                    this.total = res.count_line
+                    this.total = res.count_page * 100
                     // eslint-disable-next-line camelcase
-                    this.current = Math.ceil(res.count_line / 100) ? this.current === 0 : Math.ceil(start_line / 100)
+                    this.current = res.page
                     console.log(this.current)
                 })
         },
         pageChange (page) {
-            this.getM2Log(null, ((page - 1) * 100) + 1)
+            this.getM2Log(null, page)
         }
 
     },
@@ -67,10 +68,13 @@ export default {
 
 <style lang="less" scoped>
 .textarea {
+    // padding: 10px;
     background-color: black;
     color: chartreuse;
     height: 100%;
     width: 100%;
     resize: none;
+    // white-space: normal;
+    overflow: scroll;
 }
 </style>

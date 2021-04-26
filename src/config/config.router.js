@@ -31,12 +31,6 @@ export const RouterMap = [
                         meta: { title: '分组管理' }
                     },
                     {
-                        path: 'group-edit',
-                        name: 'group-edit',
-                        component: () => import(/* webpackChunkName: "user" */ '@/views/group/edit'),
-                        meta: { title: '分组管理' }
-                    },
-                    {
                         path: 'sub-server',
                         name: 'sub-server',
                         component: () => import(/* webpackChunkName: "user" */ '@/views/server/index'),

@@ -1,102 +1,107 @@
 <template>
     <div>
-        <h1 class="title"># 个人信息</h1>
+        <div class="box">
+            <h1 class="title"># 个人信息</h1>
+            <a-divider></a-divider>
+            <a-descriptions bordered>
+                <a-descriptions-item label="用户名">
+                    {{user.user_name}}
+                </a-descriptions-item>
+                <a-descriptions-item label="邮箱">
 
-        <a-descriptions bordered
-                        class="cell">
-            <a-descriptions-item label="用户名">
-                {{user.user_name}}
-            </a-descriptions-item>
-            <a-descriptions-item label="邮箱">
+                    <input type="text"
+                           class="email"
+                           :style="{backgroundColor:bgColor}"
+                           :disabled="emailDisable"
+                           v-model="user.email">
 
-                <input type="text"
-                       class="email"
-                       :style="{backgroundColor:bgColor}"
-                       :disabled="emailDisable"
-                       v-model="user.email">
-
-                <a-tag color="green"
-                       v-if="!user.disable">已验证</a-tag>
-                <!-- <a-tag color="red"
+                    <a-tag color="green"
+                           v-if="!user.disable">已验证</a-tag>
+                    <!-- <a-tag color="red"
                        v-else>未验证</a-tag> -->
-                <template v-else>
-                    <a-button type="primary"
-                              size="small"
-                              @click="changEmail"
-                              class="button">{{emailButtonText}}</a-button>
-                    <a-button type="primary"
-                              size="small"
-                              class="button"
-                              @click="sendEmail"
-                              :loading="emailButtonLoading">验证</a-button>
+                    <template v-else>
+                        <a-button type="primary"
+                                  size="small"
+                                  @click="changEmail"
+                                  class="button">{{emailButtonText}}</a-button>
+                        <a-button type="primary"
+                                  size="small"
+                                  class="button"
+                                  @click="sendEmail"
+                                  :loading="emailButtonLoading">验证</a-button>
 
-                </template>
+                    </template>
 
-            </a-descriptions-item>
-            <a-descriptions-item label="QQ">
-                {{user.qq}}
-            </a-descriptions-item>
-            <a-descriptions-item label="剩余金额">
-                {{user.coin}}
-            </a-descriptions-item>
-            <a-descriptions-item label="最后登录时间">
-                {{user.last_login_time}}
-            </a-descriptions-item>
-        </a-descriptions>
+                </a-descriptions-item>
+                <a-descriptions-item label="QQ">
+                    {{user.qq}}
+                </a-descriptions-item>
+                <a-descriptions-item label="剩余金额">
+                    {{user.coin}}
+                </a-descriptions-item>
+                <a-descriptions-item label="最后登录时间">
+                    {{user.last_login_time}}
+                </a-descriptions-item>
+            </a-descriptions>
+        </div>
         <a-divider></a-divider>
-        <h1 class="title"># 我得推广</h1>
+        <div class="box">
+            <h1 class="title"># 我的推广</h1>
+            <a-divider></a-divider>
+            <a-descriptions bordered>
+                <a-descriptions-item label="推广人数">
+                    16
+                </a-descriptions-item>
+                <a-descriptions-item label="推广分成">
+                    20% + 5%
+                </a-descriptions-item>
+                <a-descriptions-item label="推广收入">
+                    856元
+                </a-descriptions-item>
+                <a-descriptions-item label="推广链接"
+                                     span="3">
+                    http:{{domain}}/user/login?promoter={{user.id}}
+                </a-descriptions-item>
+                <a-descriptions-item label="系统文案"
+                                     span="3">
+                    http:{{domain}}/user/login?promoter={{user.id}}
+                </a-descriptions-item>
+                <a-descriptions-item label="推广说明"
+                                     span="3">
 
-        <a-descriptions bordered
-                        class="cell">
-            <a-descriptions-item label="推广人数">
-                16
-            </a-descriptions-item>
-            <a-descriptions-item label="推广分成">
-                20% + 5%
-            </a-descriptions-item>
-            <a-descriptions-item label="推广收入">
-                856元
-            </a-descriptions-item>
-            <a-descriptions-item label="推广链接"
-                                 span="3">
-                http:{{domain}}/user/login?promoter={{user.id}}
-            </a-descriptions-item>
-            <a-descriptions-item label="系统文案"
-                                 span="3">
-                http:{{domain}}/user/login?promoter={{user.id}}
-            </a-descriptions-item>
-            <a-descriptions-item label="推广说明"
-                                 span="3">
+                    <li>用户通过推广链接注册，并激活账户，推广人与被推广人各得10元</li>
+                    <li>被推广人首次充值，推广人获得其充值金额的20%返利</li>
+                    <li>被推广人后续充值，推广人获得其充值金额的5%返利</li>
 
-                <li>用户通过推广链接注册，并激活账户，推广人与被推广人各得10元</li>
-                <li>被推广人首次充值，推广人获得其充值金额的20%返利</li>
-                <li>被推广人后续充值，推广人获得其充值金额的5%返利</li>
+                </a-descriptions-item>
 
-            </a-descriptions-item>
-
-        </a-descriptions>
+            </a-descriptions>
+        </div>
 
         <a-divider></a-divider>
-        <h1 class="title"># 金币记录</h1>
-        <a-table :columns="columns"
-                 :data-source="coinLogs_"
-                 size="middle"
-                 rowKey="id"
-                 style="background-color:#fff">
-            <span slot="coin"
-                  slot-scope="text,record">
-                {{ record.after-record.before}}
-            </span>
-            <span slot="time"
-                  slot-scope="time">
-                {{$moment(time*1000).format('YYYY-MM-D, HH:mm:ss')}}
-            </span>
-            <span slot="type"
-                  slot-scope="type">
-                {{coinLogType[type-1].name}}
-            </span>
+        <div class="box">
+            <h1 class="title"># 金币记录</h1>
+            <a-divider></a-divider>
+            <a-table :columns="columns"
+                     :data-source="coinLogs_"
+                     size="middle"
+                     rowKey="id"
+                     style="background-color:#fff">
+                <span slot="coin"
+                      slot-scope="text,record">
+                    {{ record.after-record.before}}
+                </span>
+                <span slot="time"
+                      slot-scope="time">
+                    {{$moment(time*1000).format('YYYY-MM-D, HH:mm:ss')}}
+                </span>
+                <span slot="type"
+                      slot-scope="type">
+                    {{coinLogType[type-1].name}}
+                </span>
 
-        </a-table>
+            </a-table>
+        </div>
 
     </div>
 </template>
@@ -199,10 +204,6 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-.cell {
-    background-color: #fff;
-}
-
 .title {
     font-weight: 600;
     font-size: 18px;
@@ -218,5 +219,10 @@ export default {
     padding: 1px 8px;
     border: none;
     outline: 0;
+}
+
+.box {
+    background-color: #fff;
+    padding: 20px;
 }
 </style>

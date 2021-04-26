@@ -1,7 +1,8 @@
 <template>
     <div class="main">
         <a-button type="primary"
-                  style="margin-bottom:10px"
+                  icon="plus"
+                  style="margin-bottom:15px"
                   @click="create">创建分区</a-button>
         <service />
         <createService ref="createService" />
@@ -31,4 +32,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.main {
+    background-color: #fff;
+    padding: 20px;
+}
 </style>

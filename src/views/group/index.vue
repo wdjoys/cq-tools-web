@@ -5,12 +5,12 @@
                    :xl="12"
                    :xxl="8"
                    class="card">
-                <router-link :to="{ name:'group-edit'}">
-                    <a-button type=""
-                              style="width:100%;height:217px">
-                        <a-icon type="plus" />创建分组
-                    </a-button>
-                </router-link>
+
+                <a-button type=""
+                          @click="()=>{$refs.edit.visible = true}"
+                          style="width:100%;height:217px">
+                    <a-icon type="plus" />创建分组
+                </a-button>
 
             </a-col>
             <a-col v-for="group in groups"
@@ -30,12 +30,9 @@
                                       @confirm="delete_group(group)">
                             <a style="margin-right:10px">删除</a>
                         </a-popconfirm>
-                        <router-link :to="{
-                                     name:'group-edit',
-                                     params: group
-                        }">
+                        <a @click="()=>{$refs.edit.visible = true;$nextTick(()=>{$refs.edit.$refs.edit2.form=group;})}">
                             编辑
-                        </router-link>
+                        </a>
                     </template>
 
                     <p><span>分组列表地址：</span>
@@ -62,13 +59,14 @@
             </a-col>
 
         </a-row>
-
+        <edit ref="edit" />
     </div>
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-
+import edit from './edit'
 export default {
+    components: { edit },
     data () {
         return {
 
