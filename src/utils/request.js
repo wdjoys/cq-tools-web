@@ -5,6 +5,7 @@ import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
 import { authURL, USER_TOKEN } from '@/config/config.common.js'
 
+import md5 from 'js-md5'
 const service = axios.create({
 
     timeout: 40000 // 请求超时时间
@@ -56,7 +57,11 @@ service.interceptors.request.use(config => {
             config.headers.Authorization = 'Bearer ' + token.access_token // 让每个请求携带自定义 token 请根据实际情况自行修改
         }
     } else { // 请求用户的服务器
-
+        const license = store.getters.get_server.licence
+        const timeStamp = new Date().getTime()
+        const md5Str = md5(`${timeStamp}${license}`)
+        console.log(`${timeStamp}${license}`)
+        config.headers['Server-Token'] = `${md5Str} - ${timeStamp}` // 让每个请求携带自定义 token 请根据实际情况自行修改
     }
 
     // console.log(config)
