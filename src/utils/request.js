@@ -57,10 +57,10 @@ service.interceptors.request.use(config => {
             config.headers.Authorization = 'Bearer ' + token.access_token // 让每个请求携带自定义 token 请根据实际情况自行修改
         }
     } else { // 请求用户的服务器
-        const license = store.getters.get_server.licence
+        const license = store.getters.get_server.key
         const timeStamp = new Date().getTime()
         const md5Str = md5(`${timeStamp}${license}`)
-        console.log(`${timeStamp}${license}`)
+        // console.log(`${timeStamp}${license}`)
         config.headers['Server-Token'] = `${md5Str} - ${timeStamp}` // 让每个请求携带自定义 token 请根据实际情况自行修改
     }
 

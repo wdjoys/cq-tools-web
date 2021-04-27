@@ -18,7 +18,8 @@ const URL = {
     serverAuthor: 'server/author/',
     coinLogs: 'coin_logs/',
     coinLogType: 'coin_log_type/',
-    email: 'email/'
+    email: 'email/',
+    serverLicence: 'server-licence/'
 
 }
 

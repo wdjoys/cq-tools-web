@@ -69,9 +69,11 @@
                 <a-descriptions-item label="推广说明"
                                      span="3">
 
-                    <li>用户通过推广链接注册，并激活账户，推广人与被推广人各得10元</li>
-                    <li>被推广人首次充值，推广人获得其充值金额的20%返利</li>
-                    <li>被推广人后续充值，推广人获得其充值金额的5%返利</li>
+                    <ul>
+                        <li>用户通过推广链接注册，并激活账户，推广人与被推广人各得10元</li>
+                        <li>被推广人首次充值，推广人获得其充值金额的20%返利</li>
+                        <li>被推广人后续充值，推广人获得其充值金额的5%返利</li>
+                    </ul>
 
                 </a-descriptions-item>
 
@@ -87,18 +89,18 @@
                      size="middle"
                      rowKey="id"
                      style="background-color:#fff">
-                <span slot="coin"
-                      slot-scope="text,record">
+                <template slot="coin"
+                          slot-scope="text,record">
                     {{ record.after-record.before}}
-                </span>
-                <span slot="time"
-                      slot-scope="time">
+                </template>
+                <template slot="time"
+                          slot-scope="time">
                     {{$moment(time*1000).format('YYYY-MM-D, HH:mm:ss')}}
-                </span>
-                <span slot="type"
-                      slot-scope="type">
+                </template>
+                <template slot="type"
+                          slot-scope="type">
                     {{coinLogType[type-1].name}}
-                </span>
+                </template>
 
             </a-table>
         </div>
@@ -118,7 +120,8 @@ const columns = [
     {
         title: '时间',
         dataIndex: 'time',
-        scopedSlots: { customRender: 'time' }
+        scopedSlots: { customRender: 'time' },
+        sorter: (a, b) => a.time - b.time
     },
     {
         title: '金额',
@@ -196,9 +199,9 @@ export default {
             return coinLogs
         }
     },
-    mounted () {
+    async mounted () {
         // console.log(this.coinLogs, this.coinLogs.length === 0, '1111')
-        this.coinLogType.length === 0 && this.getCoinLogType()
+        this.coinLogType.length === 0 && await this.getCoinLogType()
         this.coinLogs.length === 0 && this.getCoinLogs()
     }
 }

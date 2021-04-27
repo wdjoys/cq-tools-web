@@ -7,7 +7,7 @@
         <a-table class="table"
                  :columns="columns"
                  :data-source="servers"
-                 rowKey="licence">
+                 rowKey="ip">
             <a slot="name"
                slot-scope="text">{{ text }}</a>
             <span slot="customTitle">
@@ -25,12 +25,6 @@
                 </a-tag>
             </span>
 
-            <span slot="licence"
-                  slot-scope="licence">
-                <input :value="licence"
-                       class="text"
-                       readonly />
-            </span>
             <span slot="expiration_time"
                   slot-scope="time">
                 <template v-if="timeStampNow() < time">{{$moment.duration(timeStampNow()-time, "seconds").humanize()}}</template>
@@ -38,7 +32,10 @@
             </span>
             <span slot="action"
                   slot-scope="text, record">
-
+                <a @click="down(record)">
+                    <a-icon type="download" /> 下载 licence
+                </a>
+                <a-divider type="vertical" />
                 <template v-if="timeStampNow() < record.expiration_time">
                     <a @click="auth(record)">续期</a>
                     <a-divider type="vertical" />
@@ -101,7 +98,8 @@
 <script>
 
 import { mapState, mapActions } from 'vuex'
-
+import { getServerLicence } from '@/api/restful/auth.center'
+import { exportRaw } from '@/utils/utils'
 const columns = [
     {
         dataIndex: 'name',
@@ -112,11 +110,7 @@ const columns = [
         title: 'IP地址',
         dataIndex: 'ip'
     },
-    {
-        title: 'LICENSE',
-        dataIndex: 'licence',
-        scopedSlots: { customRender: 'licence' }
-    },
+
     {
         title: '授权类型',
         dataIndex: 'type',
@@ -199,6 +193,13 @@ export default {
                     this.$message.success('删除成功！')
                 })
                 .catch()
+        },
+        down (record) {
+            getServerLicence(record)
+                .then(res => {
+                    exportRaw('licence.lic', res)
+                })
+                .catch()
         }
 
     },
@@ -215,13 +216,5 @@ export default {
 .main {
     background-color: #fff;
     padding: 20px;
-
-    .text {
-        height: 24px;
-        background-color: rgb(213, 221, 255);
-        padding: 1px 8px;
-        border: none;
-        outline: 0;
-    }
 }
 </style>

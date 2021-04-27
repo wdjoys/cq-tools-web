@@ -104,7 +104,16 @@ function changeEmail (email) {
 
     })
 }
+
+function getServerLicence (params) {
+    return axiosAuthServer({
+        url: URL.serverLicence,
+        method: 'post',
+        data: params
+
+    })
+}
 export {
     login, getUserInfo, getServers, getCards, sendActiceMessage, register, serverAuthor, deleteServer, getCoinLogs, getCoinLogType,
-    changeEmail
+    changeEmail, getServerLicence
 }
