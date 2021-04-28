@@ -212,6 +212,9 @@ export default {
         width: 100%;
         white-space: nowrap;
         overflow: scroll;
+        font-family: monospace;
+        font-size: 13px;
+        color: black;
     }
     .var-text {
         margin: 0px 0px 8px 0px;

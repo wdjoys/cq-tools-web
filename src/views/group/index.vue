@@ -7,7 +7,11 @@
                    class="card">
 
                 <a-button type=""
-                          @click="()=>{$refs.edit.visible = true}"
+                          @click="()=>{$refs.edit.visible = true;$nextTick(()=>{$refs.edit.$refs.edit2.form={name: '',
+                root_server_path: '',
+                template: '',
+                template_sub: '',
+                merge_tool_path: ''};})}"
                           style="width:100%;height:217px">
                     <a-icon type="plus" />创建分组
                 </a-button>

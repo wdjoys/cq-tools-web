@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-drawer :title="title"
-                  :width="800"
+                  :width="1000"
                   :visible="visible"
                   :body-style="{ paddingBottom: '80px' }"
                   @close="onClose">
@@ -35,7 +35,7 @@ export default {
     components: { edit2 },
     data () {
         return {
-            title: 'Create a new account',
+            title: '分组信息编辑',
             visible: false
         }
     },
