@@ -88,7 +88,7 @@ export default {
                 电信ip: 'ct_ip',
                 联通ip: 'cu_ip',
                 移动ip: 'cm_ip',
-                登录端口: 'port',
+                登录端口: 'server_port',
                 微端ip: 'micro_server_ip',
                 微端端口: 'micro_server_port',
                 测试时间_年: 'test_year',
