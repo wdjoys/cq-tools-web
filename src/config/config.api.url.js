@@ -19,7 +19,8 @@ const URL = {
     coinLogs: 'coin_logs/',
     coinLogType: 'coin_log_type/',
     email: 'email/',
-    serverLicence: 'server-licence/'
+    serverLicence: 'server-licence/',
+    charge: 'charge/'
 
 }
 

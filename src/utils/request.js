@@ -42,7 +42,7 @@ const err = error => {
             description: '请检查本地网络，或联系管理员'
         })
     }
-    console.log(error.message)
+    // console.log(error.message)
     return Promise.reject(error)
 }
 

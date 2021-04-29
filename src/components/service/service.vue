@@ -16,7 +16,7 @@
             </span>
             <span slot="start_time"
                   slot-scope="start_time">
-                {{$moment(start_time*1000).format("YYYY , MMMDo , a , hh:mm")}}
+                {{$moment(start_time*1000).format("YYYY-MM-D ,  HH:mm:ss")}}
             </span>
             <span slot="player"
                   slot-scope="player">
@@ -62,7 +62,7 @@ const columns = [
     },
 
     {
-        title: '启动时间',
+        title: '开区时间',
         dataIndex: 'start_time',
         key: 'start_time',
         scopedSlots: { customRender: 'start_time' }

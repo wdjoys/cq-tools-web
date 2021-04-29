@@ -5,8 +5,8 @@
             <div class="box">
                 <h1 class="title"># 基本配置</h1>
                 <a-divider></a-divider>
-                <a-form-model :labelCol="{span:5}"
-                              :wrapperCol="{span:14}"
+                <a-form-model :labelCol="{span:3}"
+                              :wrapperCol="{span:12}"
                               v-model="config.base"
                               class="form">
 
@@ -22,8 +22,8 @@
             <div class="box">
                 <h1 class="title"># 腾讯云配置</h1>
                 <a-divider></a-divider>
-                <a-form-model :labelCol="{span:5}"
-                              :wrapperCol="{span:14}"
+                <a-form-model :labelCol="{span:3}"
+                              :wrapperCol="{span:12}"
                               v-model="config_obj.cos"
                               class="form">
 

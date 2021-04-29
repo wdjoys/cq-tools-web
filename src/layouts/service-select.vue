@@ -60,6 +60,11 @@
                         <a-icon type="bell"
                                 style="font-size:18px" />
                     </span>
+                    <span class="bell"
+                          @click="()=>{visible=true}">
+                        <a-icon type="money-collect"
+                                style="font-size:18px" />
+                    </span>
 
                     <a-dropdown>
                         <span class="user-info">
@@ -88,7 +93,20 @@
                     </a-dropdown>
 
                 </div>
-
+                <a-modal v-model="visible"
+                         title="卡密充值"
+                         centered
+                         @ok="handleOk">
+                    <a-form-model :model="form"
+                                  :rules='rule'
+                                  ref="charge">
+                        <a-form-model-item prop='code'
+                                           style="margin-top:15px">
+                            <a-input placeholder="请输入要使用的卡密"
+                                     v-model="form.code"></a-input>
+                        </a-form-model-item>
+                    </a-form-model>
+                </a-modal>
             </a-col>
         </a-row>
     </div>
@@ -99,11 +117,20 @@
 import { SrverInfo } from '@/api/restful/restful'
 import { bytesFormatter } from '@/utils/utils'
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+import { charge } from '@/api/restful/auth.center'
 export default {
     data () {
         return {
             serverInfo: {},
-            disks: []
+            disks: [],
+            visible: false,
+            form: { code: '' },
+            rule: {
+                code: [
+                    { required: true, message: '请输入卡密', trigger: 'blur' },
+                    { len: 36, message: '卡密不正确', trigger: 'blur' }
+                ]
+            }
         }
     },
     methods: {
@@ -120,6 +147,19 @@ export default {
             this.SET_SERVER_INFO(server)
             window.location.reload()
             // console.log(this.serverInfo, '11')
+        },
+        handleOk () {
+            this.$refs.charge.validate(valid => {
+                if (valid) {
+                    charge(this.form)
+                        .then(res => {
+                            this.$message.success(res.msg + '  金额：' + res.value)
+                        })
+                        .catch(err => {
+                            this.$message.error(err.response.data.detail)
+                        })
+                }
+            })
         }
     },
     mounted () {

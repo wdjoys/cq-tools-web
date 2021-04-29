@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-drawer :title="title"
-                  :width="1000"
+                  :width="'50vw'"
                   :visible="visible"
                   :body-style="{ paddingBottom: '80px' }"
                   @close="onClose">
