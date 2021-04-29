@@ -113,7 +113,16 @@ function getServerLicence (params) {
 
     })
 }
+
+function charge (params) {
+    return axiosAuthServer({
+        url: URL.charge,
+        method: 'post',
+        data: params
+    })
+}
+
 export {
     login, getUserInfo, getServers, getCards, sendActiceMessage, register, serverAuthor, deleteServer, getCoinLogs, getCoinLogType,
-    changeEmail, getServerLicence
+    changeEmail, getServerLicence, charge
 }
