@@ -3,19 +3,19 @@ import axios from 'axios'
 import store from '@/store'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
-import { baseURL, USER_INFO } from '@/config/config.common.js'
+import { authURL, USER_TOKEN } from '@/config/config.common.js'
 
-// 创建 axios 实例
+import md5 from 'js-md5'
 const service = axios.create({
-    baseURL,
-    timeout: 4000 // 请求超时时间
+
+    timeout: 40000 // 请求超时时间
 })
 
 const err = error => {
     // 有响应
     if (error.response) {
         const data = error.response.data
-        const user = Vue.session.get(USER_INFO)
+        const user = Vue.session.get(USER_TOKEN)
         if (error.response.status === 403) {
             notification.error({
                 message: 'Forbidden',
@@ -31,29 +31,39 @@ const err = error => {
                 description: 'Authorization verification failed'
             })
             if (user) {
-                store.dispatch('Logout').then(() => {
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 500)
-                })
+                store.dispatch('authCenter/logout')
+                window.location.reload()
             }
         }
         // 超时
-    } else if (error.message.indexOf('timeout') !== -1) {
+    } else if (error.message.indexOf('timeout') !== -1 || error.message.indexOf('Network Error') !== -1) {
         notification.error({
             message: 'Request Timeout',
             description: '请检查本地网络，或联系管理员'
         })
     }
+    // console.log(error.message)
     return Promise.reject(error)
 }
 
 // request interceptor
 service.interceptors.request.use(config => {
-    const user = Vue.session.get(USER_INFO)
-    if (user) {
-        config.headers.Authorization = 'Bearer ' + user.token // 让每个请求携带自定义 token 请根据实际情况自行修改
+    // console.log(config)
+
+    if (config.url.indexOf(authURL) > -1) { // 请求我的服务器
+        const token = Vue.session.get(USER_TOKEN)
+        // console.log(token)
+        if (token) {
+            config.headers.Authorization = 'Bearer ' + token.access_token // 让每个请求携带自定义 token 请根据实际情况自行修改
+        }
+    } else { // 请求用户的服务器
+        const license = store.getters.get_server.key
+        const timeStamp = new Date().getTime()
+        const md5Str = md5(`${timeStamp}${license}`)
+        // console.log(`${timeStamp}${license}`)
+        config.headers['Server-Token'] = `${md5Str} - ${timeStamp}` // 让每个请求携带自定义 token 请根据实际情况自行修改
     }
+
     // console.log(config)
     return config
 }, err)
@@ -70,4 +80,20 @@ const installer = {
     }
 }
 
-export { installer as VueAxios, service as axios }
+const axiosGameServer = (config) => {
+    if (!store.getters.get_server) {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject('无服务器ip')
+    }
+    const gameURL = '//' + store.getters.get_server.ip + ':7890/'
+    config.url = gameURL + config.url
+    console.log('axios', config)
+    return service(config)
+}
+
+const axiosAuthServer = (config) => {
+    config.url = authURL + config.url
+    return service(config)
+}
+
+export { installer as VueAxios, axiosGameServer, axiosAuthServer }

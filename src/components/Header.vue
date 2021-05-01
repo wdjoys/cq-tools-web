@@ -3,7 +3,7 @@
         <div>
             <img src="@/assets/logo.png"
                  id="logo">
-            <span>关键零部件信息管理系统</span>
+            <span>XXXXXX管理系统</span>
         </div>
         <!-- <p>可更新、可溯源、可xx 的</p> -->
     </div>

@@ -12,6 +12,54 @@ export const RouterMap = [
                 component: () => import(/* webpackChunkName: "workplace" */ '@/layouts/WorkplaceLayout'),
                 meta: { title: '工作区' },
                 children: [
+                    {
+                        path: 'home',
+                        name: 'home',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
+                        meta: { title: '主页' }
+                    },
+                    {
+                        path: 'task',
+                        name: 'task',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/task/Task'),
+                        meta: { title: '任务管理' }
+                    },
+                    {
+                        path: 'group',
+                        name: 'group',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/group/index'),
+                        meta: { title: '分组管理' }
+                    },
+                    {
+                        path: 'sub-server',
+                        name: 'sub-server',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/server/index'),
+                        meta: { title: '分区管理' }
+                    },
+                    {
+                        path: 'monitor',
+                        name: 'monitor',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/home/index'),
+                        meta: { title: '负载监控' }
+                    },
+                    {
+                        path: 'me',
+                        name: 'me',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/me'),
+                        meta: { title: '用户管理' }
+                    },
+                    {
+                        path: 'auth',
+                        name: 'auth',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/server'),
+                        meta: { title: '授权管理' }
+                    },
+                    {
+                        path: 'server-setting',
+                        name: 'server-setting',
+                        component: () => import(/* webpackChunkName: "user" */ '@/views/manage/ServerSetting'),
+                        meta: { title: '基本设置' }
+                    }
 
                 ]
             },
