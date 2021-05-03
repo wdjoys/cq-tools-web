@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '@/store'
 import notification from 'ant-design-vue/es/notification'
 import { VueAxios } from './axios'
-import { authURL, USER_TOKEN } from '@/config/config.common.js'
+import { serviceURL, authURL, USER_TOKEN } from '@/config/config.common.js'
 
 import md5 from 'js-md5'
 const service = axios.create({
@@ -85,7 +85,7 @@ const axiosGameServer = (config) => {
         // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject('无服务器ip')
     }
-    const gameURL = '//' + store.getters.get_server.ip + ':7890/'
+    const gameURL = `https://${store.getters.get_server.id.toString().padStart(6, '0')}.${serviceURL}`
     config.url = gameURL + config.url
     console.log('axios', config)
     return service(config)
