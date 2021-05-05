@@ -15,5 +15,5 @@ export const DEFAULT_MULTI_TAB = 'DEFAULT_MULTI_TAB'
 // 应用地址
 export const authURL = process.env.NODE_ENV === 'development' ? '//127.0.0.1:28888/' : '//api.56lx.com/'
 
-// 开区服务器 玉米
+// 开区服务器 主玉米
 export const serviceURL = 'neihan.xyz:29999/'
